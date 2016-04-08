@@ -78,7 +78,7 @@ class DecryptCommand extends ContainerAwareCommand
             foreach( $combinations as $key => $combination ){
                 if( $timeLimit < new \DateTime() ){
                     $em->flush();
-                    $this->sendHashReport( $startedAt, new \DateTime(), $count, (memory_get_peak_usage(true)/1024/1024)." MiB" );
+                    $this->sendHashReport( $startedAt, new \DateTime(), $added, (memory_get_peak_usage(true)/1024/1024)." MiB" );
                     $output->writeln('Time limit reached! Exiting ...');
                     sleep( 5 );
                     die;
