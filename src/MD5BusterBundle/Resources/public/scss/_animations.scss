@@ -1,0 +1,10 @@
+@-webkit-keyframes scroll_indicator_pulse {
+  0%   { background-color: #fff10d; }
+  50% { background-color: #4eff3c; }
+  100% { background-color: #fff10d; }
+}
+@keyframes scroll_indicator_pulse {
+  0%   { background-color: #fff10d; }
+  50% { background-color: #4eff3c; }
+  100% { background-color: #fff10d; }
+}

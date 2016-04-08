@@ -1,0 +1,7 @@
+md5buster_app:
+    resource: "@MD5BusterBundle/Resources/config/routes/_app.yml"
+    prefix:   /
+
+md5buster_api:
+    resource: "@MD5BusterBundle/Resources/config/routes/_api.yml"
+    prefix:   /_api

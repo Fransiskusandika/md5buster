@@ -1,0 +1,43 @@
+{% include '@MD5Buster/miscellaneous/source_signature.html.twig' %}
+{% spaceless %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        {% stylesheets
+            'bundles/md5buster/scss/md5buster.scss'
+            output='css/md5buster.css' filter='cssrewrite'
+        %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
+        {% image '@MD5BusterBundle/Resources/public/images/favicon.png' output='images/favicon.png' %}
+            <link rel="icon" type="image/png" href="{{ asset_url }}">
+        {% endimage %}
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0 maximum-scale=1, user-scalable=0">
+        <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' rel='stylesheet' type='text/css'>
+        {% block meta_title %}
+            <title>{{ site_title }}</title>
+        {% endblock %}
+    </head>
+    <body>
+    {% block body %}{% endblock %}
+    <script type="text/javascript">var root = '{{ path('md5buster_homepage') }}';</script>
+    {% javascripts
+        '@MD5BusterBundle/Resources/public/js/app.js'
+        '@MD5BusterBundle/Resources/public/js/vendor/jquery-2.2.2.min.js'
+        '@MD5BusterBundle/Resources/public/js/vendor/json2.js'
+        '@MD5BusterBundle/Resources/public/js/vendor/underscore.js'
+        '@MD5BusterBundle/Resources/public/js/vendor/backbone.js'
+        '@MD5BusterBundle/Resources/public/js/vendor/backbone.marionette.js'
+        '@MD5BusterBundle/Resources/public/js/vendor/js.cookie.js'
+        '@MD5BusterBundle/Resources/public/js/app/models/*'
+        '@MD5BusterBundle/Resources/public/js/app/views/*'
+        '@MD5BusterBundle/Resources/public/js/app/functions/*'
+        '@MD5BusterBundle/Resources/public/js/app/_router.js'
+        '@MD5BusterBundle/Resources/public/js/app/md5buster.js'
+        output='js/md5buster.js' filter='yui_js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}" ></script>
+    {% endjavascripts %}
+    </body>
+    </html>
+{% endspaceless %}

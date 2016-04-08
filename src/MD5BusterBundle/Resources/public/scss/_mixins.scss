@@ -1,0 +1,30 @@
+@mixin transition( $target, $duration, $type ){
+  -webkit-transition: $target $duration $type;
+  -moz-transition: $target $duration $type;
+  -ms-transition: $target $duration $type;
+  -o-transition: $target $duration $type;
+  transition: $target $duration $type;
+}
+@mixin box-shadow( $w, $x, $y, $z, $color ){
+  -webkit-box-shadow: $w $x $y $z $color;
+  -moz-box-shadow: $w $x $y $z $color;
+  box-shadow: $w $x $y $z $color;
+}
+@mixin border-radius( $radius ){
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+@mixin transform ( $property ){
+  -webkit-transform: $property;
+  -moz-transform: $property;
+  -ms-transform: $property;
+  -o-transform: $property;
+  transform: $property;
+}
+@mixin userSelect( $property ){
+  -webkit-user-select: $property;
+  -moz-user-select: $property;
+  -ms-user-select: $property;
+  user-select: $property;
+}

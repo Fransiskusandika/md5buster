@@ -1,0 +1,3 @@
+md5buster_api_templates:
+    path:     /templates
+    defaults: { _controller: MD5BusterBundle:Api:templates }
