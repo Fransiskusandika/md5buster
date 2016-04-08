@@ -4,13 +4,16 @@
     <p style="margin-top: 0;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 25px">Cron job report here!</p>
     <ul>
         <li style="margin-top: 0;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 15px">
-            Started at: <strong>{{ startedAt|date('M jS, Y') }}</strong>
+            Started at: <strong>{{ startedAt|date('M jS, Y H:i:s') }}</strong>
         </li>
         <li style="margin-top: 0;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 15px">
-            Ended at: <strong>{{ endedAt|date('M jS, Y') }}</strong>
+            Ended at: <strong>{{ endedAt|date('M jS, Y H:i:s') }}</strong>
         </li>
         <li style="margin-top: 0;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 15px">
-            Expressions inserted: {{ count|number_format(2, '.', ',') }}
+            Expressions inserted: <strong>{{ count|number_format(2, '.', ',') }}</strong>
+        </li>
+        <li style="margin-top: 0;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 15px">
+            Memory used: <strong>{{ memory }}</strong>
         </li>
     </ul>
     <p style="margin-top: 25px;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 25px">

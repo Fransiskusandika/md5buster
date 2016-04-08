@@ -78,7 +78,7 @@ class DecryptCommand extends ContainerAwareCommand
             foreach( $combinations as $key => $combination ){
                 if( $timeLimit < new \DateTime() ){
                     $em->flush();
-                    $this->sendHashReport( $startedAt, new \DateTime(), $count );
+                    $this->sendHashReport( $startedAt, new \DateTime(), $count, (memory_get_peak_usage(true)/1024/1024)." MiB" );
                     $output->writeln('Time limit reached! Exiting ...');
                     sleep( 5 );
                     die;
@@ -146,7 +146,7 @@ class DecryptCommand extends ContainerAwareCommand
      * @throws \Exception
      * @throws \Twig_Error
      */
-    private function sendHashReport( $startedAt, $endedAt, $count )
+    private function sendHashReport( $startedAt, $endedAt, $count, $memory )
     {
         $email = \Swift_Message::newInstance()
             ->setSubject( 'MD5 Buster Hash Cron Report')
@@ -158,7 +158,8 @@ class DecryptCommand extends ContainerAwareCommand
                     [
                         'startedAt' => $startedAt,
                         'endedAt' => $endedAt,
-                        'count' => $count
+                        'count' => $count,
+                        'memory' => $memory
                     ]
                 )
             )
