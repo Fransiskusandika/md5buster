@@ -49,7 +49,7 @@ class DecryptCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        ini_set( 'memory_limit', '5048M' );
+        ini_set( 'memory_limit', '25048M' );
         $time = $input->getOption( 'time' );
         if( $time == null ){
             $output->writeln('No time limit specified, defaulting to 60 seconds');
@@ -79,7 +79,7 @@ class DecryptCommand extends ContainerAwareCommand
                 if( $timeLimit < new \DateTime() ){
                     $em->flush();
                     $this->sendHashReport( $startedAt, new \DateTime(), $added, (memory_get_peak_usage(true)/1024/1024)." MiB" );
-                    $output->writeln('Time limit reached! Exiting ...');
+                    $output->writeln('Time limit reached! Added ' . $added . ' new entries! Exiting ...');
                     sleep( 5 );
                     die;
                 }
