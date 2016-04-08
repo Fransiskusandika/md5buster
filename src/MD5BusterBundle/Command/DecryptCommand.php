@@ -143,6 +143,7 @@ class DecryptCommand extends ContainerAwareCommand
      * @param $startedAt
      * @param $endedAt
      * @param $count
+     * @param $memory
      * @throws \Exception
      * @throws \Twig_Error
      */
