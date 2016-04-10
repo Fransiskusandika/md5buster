@@ -38,7 +38,7 @@ class TemplatingService
         $data = [
             'appHeader' => $twigEngine->render( '@MD5Buster/templates/header/_header.html.twig' ),
             'footNote' => $twigEngine->render( '@MD5Buster/templates/footnote/_default.html.twig' ),
-            'landingPage' => $twigEngine->render( '@MD5Buster/templates/landing/_landing_page.html.twig' )
+            'decryptPage' => $twigEngine->render( '@MD5Buster/templates/decrypt/_decrypt_page.html.twig' )
         ];
 
         return $this->serializer->serialize( $data, 'json' );

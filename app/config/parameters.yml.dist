@@ -21,3 +21,6 @@ parameters:
     ruby_path: PathToRuby
     sass_bin: PathToSass
     compass_bin: PathToCompass
+
+    recaptcha_site_key: key
+    recaptcha_secret_key: key

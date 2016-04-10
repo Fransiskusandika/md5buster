@@ -8,7 +8,23 @@ a {
     outline: none;
   }
 }
-
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.text-center {
+  text-align: center;
+}
+@for $i from 1 through 12 {
+  .col-#{$i} { @include define-col( $i ) };
+}
 html {
   height: 100%;
   &.locked {
@@ -18,48 +34,90 @@ html {
     font-family: 'Roboto Condensed', sans-serif;
     height: 100%;
     margin: 0;
-    background-color: #1B1B1B;
-    color: #FFFFFF;
-    &>.header-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1;
-      &>.app-header {
-
-      }
-    }
+    background-color: #fffbff;
+    color: #0e0e0e;
     &>.app-container {
+      height: 100%;
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto;
+      background-color: #ffffff;
+      border-left: 1px solid rgba(0,0,0, .1);
+      border-right: 1px solid rgba(0,0,0, .1);
+      @media (min-width: 768px) {
+        width: 750px;
+      }
+      @media (min-width: 992px) {
+        width: 970px;
+      }
+      @media (min-width: 1200px) {
+        width: 1170px;
+      }
+      &:before, &:after {
+        display: table;
+        content: ' ';
+      }
+      &>.header-container {
+        &>.app-header {
+          .navigation {
+            margin-left: -15px;
+            margin-right: -15px;
+            @include gradientBackground( #ffffff, #f7f7f7);
+            border-top: 1px solid rgba(0,0,0, .1);
+            border-bottom: 1px solid rgba(0,0,0, .1);
+            .navbar {
+              list-style-type: none;
+              padding-left: 0;
+              margin: 0;
+              display: inline-block;
+              &.nav-left {
+                float: left;
+              }
+              &.nav-right {
+                float: right;
+              }
+              &>li {
+                display: inline-block;
+                border-right: 1px solid rgba(0,0,0, .1);
+                &>a {
+                  @include gradientBackground( #ffffff, #f7f7f7);
+                  @include transition( color, .2s, ease-in-out );
+                  display: inline-block;
+                  text-decoration: none;
+                  font-weight: bold;
+                  padding: 15px 20px;
+                  font-size: 20px;
+                  color: rgba(222, 222, 222, 0.7);
+                  &:hover {
+                    text-decoration: none;
+                    color: rgba(0, 128, 128, 0.85);
+                  }
+                  &:active {
+                    background: #f7f7f7;
+                  }
+                  &.active {
+                    color: rgba(0, 128, 128, 1);
+                  }
+                }
+                &.logo {
+                  &>a {
+                    @include gradientBackground( #008080, #007777);
+                    padding: 0;
+                    &>img {
+                      vertical-align: middle;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
       &>.body-container {
-        margin-top: 75px;
         margin-bottom: 15px;
         padding-left: 5px;
         padding-right: 5px;
-      }
-      &>.landing-page-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        padding: 0;
-        display: table;
-        width: 100%;
-        height: 100%;
-        &>.landing-page {
-          display: table-cell;
-          vertical-align: middle;
-          &>h1, &>p {
-            text-align: center;
-          }
-        }
-        &>.initial-loader-overlay {
-          position: fixed;
-          display: table;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-        }
       }
     }
     &>.footnote-container {
@@ -84,6 +142,7 @@ html {
           opacity: 1;
           font-weight: normal;
           font-size: 14px;
+          cursor: pointer;
           &:hover {
             @include border-radius( 15px );
             background-color: #ffffff;

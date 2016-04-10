@@ -1,10 +1,19 @@
 {% spaceless %}
-<nav class="navbar">
-    <div class="container">
-
-        <a class="navbar-brand" href="{{ path('md5buster_homepage') }}" id="home">
-
-        </a>
-    </div>
-</nav>
+    <nav class="navigation">
+        <ul class="navbar">
+            <li class="logo">
+                <a href="{{ path('md5buster_homepage') }}">
+                    {% image '@MD5BusterBundle/Resources/public/images/square_logo_small_w.png' output='images/square_logo_small_w.png' %}
+                        <img src="{{ asset_url }}" alt="MD5 Buster" title="MD5 Buster" />
+                    {% endimage %}
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('md5buster_homepage') }}">Decrypt</a>
+            </li>
+            <li>
+                <a href="{{ path('md5buster_encrypt') }}">Encrypt</a>
+            </li>
+        </ul>
+    </nav>
 {% endspaceless %}

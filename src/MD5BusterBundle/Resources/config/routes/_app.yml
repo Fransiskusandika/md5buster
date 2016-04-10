@@ -1,3 +1,6 @@
 md5buster_homepage:
     path:     /
     defaults: { _controller: MD5BusterBundle:App:home }
+md5buster_encrypt:
+    path:     /encrypt
+    defaults: { _controller: MD5BusterBundle:App:encrypt }

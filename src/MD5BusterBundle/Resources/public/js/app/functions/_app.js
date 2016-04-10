@@ -44,8 +44,8 @@ md5buster.AppFunctions = Marionette.extend({
     },
     startRouter: function()
     {
-        /** @namespace md5buster.app.landingPage */
-        md5buster.app.landingPage.$el.html('');
+        /** @namespace md5buster.app.body */
+        md5buster.app.body.$el.html('');
         md5buster.app.router = new md5buster.Router();
         md5buster.app.router.on( 'route', function (){
             md5buster.app.generalFunctions.sendGooglePageView( Backbone.history.fragment );

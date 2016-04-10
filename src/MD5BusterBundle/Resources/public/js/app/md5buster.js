@@ -8,7 +8,7 @@ md5buster.app = new Marionette.Application();
  */
 md5buster.app.addRegions({
     header        : '#header',
-    landingPage   : '#landing'
+    body   : '#body'
 });
 
 /** we initialize app functions */

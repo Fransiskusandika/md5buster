@@ -5,7 +5,7 @@ security:
 
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)/
+            pattern: ^/(_(profiler|wdt))/
             security: false
         md5buster_site_area:
             pattern: ^/
