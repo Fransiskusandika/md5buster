@@ -41,7 +41,38 @@ class DecryptCommand extends ContainerAwareCommand
                 InputOption::VALUE_REQUIRED,
                 'How long should the script run for?'
             )
+            ->addOption(
+                'lastDecryption',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'what is the last decrypted vaue'
+            )
         ;
+    }
+
+    /**
+     * @return string
+     */
+    private function getMemoryUsage()
+    {
+        return (memory_get_peak_usage(true)/1024/1024)."MB";
+    }
+
+    /**
+     * @param array $charKeys
+     * @param $numberOfChars
+     * @return bool
+     */
+    private function isItTheEndOfCombinationLength( $charKeys = [], $numberOfChars )
+    {
+        $maxKey = $numberOfChars - 1;
+        foreach( $charKeys as $charKey ){
+            if( $charKey != $maxKey ){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -52,91 +83,244 @@ class DecryptCommand extends ContainerAwareCommand
         ini_set( 'memory_limit', '25048M' );
         $time = $input->getOption( 'time' );
         if( $time == null ){
-            $output->writeln('No time limit specified, defaulting to 60 seconds');
+            //$output->writeln('No time limit specified, defaulting to 60 seconds');
             $time = 60;
         } else {
             if( !is_numeric( $time ) ){
-                $output->writeln('Invalid time attribute! Exiting ...');die;
+                //$output->writeln('Invalid time attribute! Exiting ...');
+                die;
             }
         }
         $timeLimit = new \DateTime('+' . $time . ' seconds');
         $startedAt = new \DateTime();
-        $output->writeln('Starting script for ' . $time . ' seconds' );
         $chars = $this->chars;
         $numberOfChars = count( $chars );
-        $count = 1;
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $offset = $em->getRepository('MD5BusterBundle:MD5Decryption')
-            ->createQueryBuilder('d')
-            ->select('COUNT(d.id)')
-            ->getQuery()->getSingleScalarResult()
-        ;
-        $flushSize = 2500;
-        $added = 0;
-        for( $i = 1; $i <= $numberOfChars; $i++ ){
-            $combinations = $this->sampling( $chars, $i, [] );
-            foreach( $combinations as $key => $combination ){
-                if( $timeLimit < new \DateTime() ){
-                    $em->flush();
-                    $this->sendHashReport( $startedAt, new \DateTime(), $added, (memory_get_peak_usage(true)/1024/1024)." MiB" );
-                    $output->writeln('Time limit reached! Added ' . $added . ' new entries! Exiting ...');
-                    sleep( 5 );
-                    die;
-                }
-                if( $count > $offset ){
-                    $hash = md5( $combination );
-                    $decryption = new MD5Decryption();
-                    $decryption
-                        ->setHash( $hash )
-                        ->setDecryption( $combination )
-                    ;
-                    $em->persist( $decryption );
-                    $added++;
-                    if( $key % $flushSize == 0 ) { // once every %flushSize% iterations
-                        $em->flush();
-                        $output->writeln( $count . ' - ' . $combination . ' -> ' . (memory_get_peak_usage(true)/1024/1024)." MiB");
-                        $em->clear();
-                    }
-                }
-                $count++;
+        $lastDecryption = $input->getOption('lastDecryption');
+        if( $lastDecryption == null ){
+            $lastDecryption = $em->getRepository('MD5BusterBundle:MD5Decryption')->findOneBy([],['id' => 'DESC'])->getDecryption();
+        }
+        //$output->writeln('Starting script for ' . $time . ' seconds ' );
+        $count = 1;
+        $flushSize = 500;
+        if( strlen( $lastDecryption ) == 4 ){
+            //$output->write('Resuming 4 character long decryption ...');
+            $lastDecryptionComponents = str_split($lastDecryption);
+            $char1 = array_search( $lastDecryptionComponents[0], $chars );
+            $char2 = array_search( $lastDecryptionComponents[1], $chars );
+            $char3 = array_search( $lastDecryptionComponents[2], $chars );
+            $char4 = array_search( $lastDecryptionComponents[3], $chars );
+            if( $this->isItTheEndOfCombinationLength( [
+                $char1, $char2, $char3, $char4
+            ], $numberOfChars ) ){
+                //$output->write('End of line ...');
+                $this->createNextLevelCombinationAndSendEOLEmail($startedAt, 4, 'aaaaa' );
+                sleep( 5 );
+                die;
+            } else {
+                $char4++; // it's not the end of the line so we move to the next combo to remove duplicates
             }
+            for( $i1 = $char1; $i1 < $numberOfChars; $i1++ ){
+                for( $i2 = $char2; $i2 < $numberOfChars; $i2++ ){
+                    for( $i3 = $char3; $i3 < $numberOfChars; $i3++ ){
+                        for( $i4 = $char4; $i4 < $numberOfChars; $i4++ ){
+                            if( $timeLimit < new \DateTime() ){
+                                //$output->writeln('Time limit reached! Added ' . $count . ' new entries! Exiting ...');
+                                $em->flush();
+                                $em->clear();
+                                $this->sendHashReport( $startedAt, new \DateTime(), $count, $this->getMemoryUsage() );
+                                sleep( 3 );
+                                die;
+                            }
+                            $combination = $chars[$i1].$chars[$i2].$chars[$i3].$chars[$i4];
+                            $count++;
+                            $hash = md5( $combination );
+                            $decryption = new MD5Decryption();
+                            $decryption
+                                ->setHash( $hash )
+                                ->setDecryption( $combination )
+                            ;
+                            $em->persist( $decryption );
+                            if( $count % $flushSize == 0 ) { // once every %flushSize% iterations
+                                //$output->writeln('Started flushing ' . $flushSize . ' items' . ' -> ' . $this->getMemoryUsage());
+                                $em->flush();
+                                $em->clear();
+                            }
+                        }
+                        $char4 = 0;
+                    }
+                    $char3 = 0;
+                }
+                $char2 = 0;
+            }
+            //$output->writeln('Finished! Flushing remaining items');
             $em->flush();
             $em->clear();
-            unset( $combinations );
+        } else if( strlen( $lastDecryption ) == 5 ){
+            //$output->write('Resuming 5 character long decryption ...');
+            $lastDecryptionComponents = str_split($lastDecryption);
+            $char1 = array_search( $lastDecryptionComponents[0], $chars );
+            $char2 = array_search( $lastDecryptionComponents[1], $chars );
+            $char3 = array_search( $lastDecryptionComponents[2], $chars );
+            $char4 = array_search( $lastDecryptionComponents[3], $chars );
+            $char5 = array_search( $lastDecryptionComponents[4], $chars );
+            if( $this->isItTheEndOfCombinationLength( [
+                $char1, $char2, $char3, $char4, $char5
+            ], $numberOfChars ) ){
+                //$output->write('End of line ...');
+                $this->createNextLevelCombinationAndSendEOLEmail($startedAt, 5, 'aaaaaa' );
+                sleep( 5 );
+                die;
+            } else {
+                $char5++; // it's not the end of the line so we move to the next combo to remove duplicates
+            }
+            for( $i1 = $char1; $i1 < $numberOfChars; $i1++ ){
+                for( $i2 = $char2; $i2 < $numberOfChars; $i2++ ){
+                    for( $i3 = $char3; $i3 < $numberOfChars; $i3++ ){
+                        for( $i4 = $char4; $i4 < $numberOfChars; $i4++ ){
+                            for( $i5 = $char5; $i5 < $numberOfChars; $i5++ ){
+                                if( $timeLimit < new \DateTime() ){
+                                    //$output->writeln('Time limit reached! Added ' . $count . ' new entries! Exiting ...');
+                                    $em->flush();
+                                    $this->sendHashReport( $startedAt, new \DateTime(), $count, $this->getMemoryUsage() );
+                                    sleep( 3 );
+                                    die;
+                                }
+                                $combination = $chars[$i1].$chars[$i2].$chars[$i3].$chars[$i4].$chars[$i5];
+                                $count++;
+                                $hash = md5( $combination );
+                                $decryption = new MD5Decryption();
+                                $decryption
+                                    ->setHash( $hash )
+                                    ->setDecryption( $combination )
+                                ;
+                                $em->persist( $decryption );
+                                if( $count % $flushSize == 0 ) { // once every %flushSize% iterations
+                                    //$output->writeln('Started flushing ' . $flushSize . ' items' . ' -> ' . $this->getMemoryUsage());
+                                    $em->flush();
+                                    $em->clear();
+                                }
+                            }
+                            $char5 = 0;
+                        }
+                        $char4 = 0;
+                    }
+                    $char3 = 0;
+                }
+                $char2 = 0;
+            }
+            //$output->writeln('Finished! Flushing remaining items');
+            $em->flush();
+            $em->clear();
+        } else if( strlen( $lastDecryption ) == 6 ){
+            //$output->write('Resuming 6 character long decryption ...');
+            $lastDecryptionComponents = str_split($lastDecryption);
+            $char1 = array_search( $lastDecryptionComponents[0], $chars );
+            $char2 = array_search( $lastDecryptionComponents[1], $chars );
+            $char3 = array_search( $lastDecryptionComponents[2], $chars );
+            $char4 = array_search( $lastDecryptionComponents[3], $chars );
+            $char5 = array_search( $lastDecryptionComponents[4], $chars );
+            $char6 = array_search( $lastDecryptionComponents[5], $chars );
+            if( $this->isItTheEndOfCombinationLength( [
+                $char1, $char2, $char3, $char4, $char5, $char6
+            ], $numberOfChars ) ){
+                //$output->write('End of line ...');
+                $this->createNextLevelCombinationAndSendEOLEmail($startedAt, 6, 'aaaaaaa' );
+                sleep( 5 );
+                die;
+            } else {
+                $char5++; // it's not the end of the line so we move to the next combo to remove duplicates
+            }
+            for( $i1 = $char1; $i1 < $numberOfChars; $i1++ ){
+                for( $i2 = $char2; $i2 < $numberOfChars; $i2++ ){
+                    for( $i3 = $char3; $i3 < $numberOfChars; $i3++ ){
+                        for( $i4 = $char4; $i4 < $numberOfChars; $i4++ ){
+                            for( $i5 = $char5; $i5 < $numberOfChars; $i5++ ){
+                                for( $i6 = $char6; $i6 < $numberOfChars; $i6++ ){
+                                    if( $timeLimit < new \DateTime() ){
+                                        //$output->writeln('Time limit reached! Added ' . $count . ' new entries! Exiting ...');
+                                        $em->flush();
+                                        $this->sendHashReport( $startedAt, new \DateTime(), $count, $this->getMemoryUsage() );
+                                        sleep( 3 );
+                                        die;
+                                    }
+                                    $combination = $chars[$i1].$chars[$i2].$chars[$i3].$chars[$i4].$chars[$i5].$chars[$i6];
+                                    $count++;
+                                    $hash = md5( $combination );
+                                    $decryption = new MD5Decryption();
+                                    $decryption
+                                        ->setHash( $hash )
+                                        ->setDecryption( $combination )
+                                    ;
+                                    $em->persist( $decryption );
+                                    if( $count % $flushSize == 0 ) { // once every %flushSize% iterations
+                                        //$output->writeln('Started flushing ' . $flushSize . ' items' . ' -> ' . $this->getMemoryUsage());
+                                        $em->flush();
+                                        $em->clear();
+                                    }
+                                }
+                                $char6 = 0;
+                            }
+                            $char5 = 0;
+                        }
+                        $char4 = 0;
+                    }
+                    $char3 = 0;
+                }
+                $char2 = 0;
+            }
+            //$output->writeln('Finished! Flushing remaining items');
+            $em->flush();
+            $em->clear();
+        } else {
+            //$output->writeln('Not configured to run in this mode');
+            $this->sendNotConfiguredHashReport( $startedAt, strlen( $lastDecryption ) );
         }
     }
 
     /**
-     * @param $chars
-     * @param $size
-     * @param array $combinations
-     * @return array
+     * @param $startedAt
+     * @param $currentComLength
+     * @param $newCombination
      */
-    private function sampling($chars, $size, $combinations = [])
+    private function createNextLevelCombinationAndSendEOLEmail( $startedAt, $currentComLength, $newCombination )
     {
-        # if it's the first iteration, the first set
-        # of combinations is the same as the set of characters
-        if (empty($combinations)) {
-            $combinations = $chars;
-        }
+        $hash = md5( $newCombination );
+        $decryption = new MD5Decryption();
+        $decryption
+            ->setHash( $hash )
+            ->setDecryption( $newCombination )
+        ;
+        $this->getContainer()->get('doctrine.orm.entity_manager')->persist( $decryption );
+        $this->getContainer()->get('doctrine.orm.entity_manager')->flush();
+        $this->sendEndOfLineReport( $startedAt, $currentComLength, $newCombination, $this->getMemoryUsage() );
+    }
 
-        # we're done if we're at size 1
-        if ($size == 1) {
-            return $combinations;
-        }
-
-        # initialise array to put new values in
-        $new_combinations = array();
-
-        # loop through existing combinations and character set to create strings
-        foreach ($combinations as $combination) {
-            foreach ($chars as $char) {
-                $new_combinations[] = $combination . $char;
-            }
-        }
-
-        # call same function again for the next iteration
-        return $this->sampling( $chars, $size - 1, $new_combinations );
+    /**
+     * @param $startedAt
+     * @param $charLength
+     * @throws \Exception
+     * @throws \Twig_Error
+     */
+    private function sendNotConfiguredHashReport( $startedAt, $charLength )
+    {
+        $email = \Swift_Message::newInstance()
+            ->setSubject( 'MD5 Buster Hash Cron Report')
+            ->setFrom('no-reply@md5buster.com')
+            ->setTo( $this->getContainer()->get('twig')->getGlobals()['owner_email'] )
+            ->setBody(
+                $this->getContainer()->get('templating')->render(
+                    '@MD5Buster/templates/email/hash_cron_report_email.twig',
+                    [
+                        'startedAt' => $startedAt,
+                        'charLength' => $charLength
+                    ]
+                )
+            )
+            ->setContentType('text/html')
+        ;
+        /** @noinspection PhpParamsInspection */
+        $this->getContainer()->get('mailer')->send($email);
     }
 
     /**
@@ -160,6 +344,37 @@ class DecryptCommand extends ContainerAwareCommand
                         'startedAt' => $startedAt,
                         'endedAt' => $endedAt,
                         'count' => $count,
+                        'memory' => $memory
+                    ]
+                )
+            )
+            ->setContentType('text/html')
+        ;
+        /** @noinspection PhpParamsInspection */
+        $this->getContainer()->get('mailer')->send($email);
+    }
+
+    /**
+     * @param $startedAt
+     * @param $combinationLength
+     * @param $newCombination
+     * @param $memory
+     * @throws \Exception
+     * @throws \Twig_Error
+     */
+    private function sendEndOfLineReport( $startedAt, $combinationLength, $newCombination, $memory )
+    {
+        $email = \Swift_Message::newInstance()
+            ->setSubject( 'MD5 Buster Hash Cron Report')
+            ->setFrom('no-reply@md5buster.com')
+            ->setTo( $this->getContainer()->get('twig')->getGlobals()['owner_email'] )
+            ->setBody(
+                $this->getContainer()->get('templating')->render(
+                    '@MD5Buster/templates/email/hash_cron_eol_report_email.twig',
+                    [
+                        'startedAt' => $startedAt,
+                        'combinationLength' => $combinationLength,
+                        'newCombination' => $newCombination,
                         'memory' => $memory
                     ]
                 )

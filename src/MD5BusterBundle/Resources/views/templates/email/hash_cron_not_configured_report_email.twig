@@ -1,0 +1,17 @@
+{% extends '@MD5Buster/templates/email/_template.html.twig'%}
+{% block content %}
+    <p style="margin-top: 0;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 25px">Hi, Alex,</p>
+    <p style="margin-top: 0;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 25px">Cron job report here!</p>
+    <ul>
+        <li style="margin-top: 0;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 15px">
+            Started at: <strong>{{ startedAt|date('M jS, Y H:i:s') }}</strong>
+        </li>
+        <li style="margin-top: 0;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 15px">
+            <strong style="color: #F5871F">Warning!!!</strong> Not configured to generate hashes for combination length: <strong>{{ charLength }}</strong>
+        </li>
+    </ul>
+    <p style="margin-top: 25px;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 25px">
+        Best,<br>
+        MD5 Buster Hash Cron<br>
+    </p>
+{% endblock %}
