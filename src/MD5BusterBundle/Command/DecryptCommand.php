@@ -305,7 +305,7 @@ class DecryptCommand extends ContainerAwareCommand
     private function sendNotConfiguredHashReport( $startedAt, $charLength )
     {
         $email = \Swift_Message::newInstance()
-            ->setSubject( 'MD5 Buster Hash Cron Report')
+            ->setSubject( 'MD5 Buster Hash Cron Not Configured')
             ->setFrom('no-reply@md5buster.com')
             ->setTo( $this->getContainer()->get('twig')->getGlobals()['owner_email'] )
             ->setBody(
@@ -365,7 +365,7 @@ class DecryptCommand extends ContainerAwareCommand
     private function sendEndOfLineReport( $startedAt, $combinationLength, $newCombination, $memory )
     {
         $email = \Swift_Message::newInstance()
-            ->setSubject( 'MD5 Buster Hash Cron Report')
+            ->setSubject( 'MD5 Buster Hash Cron End Of Line')
             ->setFrom('no-reply@md5buster.com')
             ->setTo( $this->getContainer()->get('twig')->getGlobals()['owner_email'] )
             ->setBody(
