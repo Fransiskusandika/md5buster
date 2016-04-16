@@ -52,6 +52,13 @@ md5buster.AppFunctions = Marionette.extend({
             md5buster.app.generalFunctions.sendGooglePageView( Backbone.history.fragment );
         });
         Backbone.history.start({ pushState: true, root: root });
+        this.removeInitialLoader();
+    },
+    removeInitialLoader: function ()
+    {
+        $( '.initial-loader-container' ).fadeOut( 'slow', function (){
+            $( this).remove();
+        });
     },
     setPageTitle: function( title )
     {
