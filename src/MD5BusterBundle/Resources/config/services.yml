@@ -1,4 +1,4 @@
 services:
-    md5buster.api.templating:
-            class: MD5BusterBundle\Services\TemplatingService
+    md5buster.api.components:
+            class: MD5BusterBundle\Services\ComponentsService
             arguments: [ "@templating", "@serializer" ]

@@ -9,10 +9,22 @@
                 </a>
             </li>
             <li>
-                <a href="{{ path('md5buster_homepage') }}">Decrypt</a>
+                <a href="{{ path('md5buster_homepage') }}" translatable="Decrypt" id="decrypt-link">Decrypt</a>
             </li>
             <li>
-                <a href="{{ path('md5buster_encrypt') }}">Encrypt</a>
+                <a href="{{ path('md5buster_encrypt') }}" translatable="Encrypt" id="encrypt-link">Encrypt</a>
+            </li>
+        </ul>
+        <ul class="navbar nav-right languages">
+            <li>
+                {% image '@MD5BusterBundle/Resources/public/images/us_uk_flag.png' output='images/us_uk_flag.png' %}
+                    <img src="{{ asset_url }}" alt="English" title="English" id="us_uk_flag" />
+                {% endimage %}
+            </li>
+            <li>
+                {% image '@MD5BusterBundle/Resources/public/images/ro_flag.png' output='images/ro_flag.png' %}
+                    <img src="{{ asset_url }}" alt="Romana" title="Romana" id="ro_flag" />
+                {% endimage %}
             </li>
         </ul>
     </nav>

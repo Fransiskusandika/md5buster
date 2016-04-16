@@ -10,13 +10,16 @@ var root = root || '/';
 
 /** define api routes */
 md5buster.apiRoutes = {
-    TEMPLATES_URL             : '_api/templates'
+    COMPONENTS_URL: '_api/components'
 };
 
 /** define app constants */
 md5buster.appConstants = {
 
 };
+
+/** define translations variable */
+md5buster.translations = {};
 
 /** define the templates variable */
 md5buster.templates = {};

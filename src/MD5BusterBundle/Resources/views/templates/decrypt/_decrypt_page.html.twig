@@ -1,5 +1,26 @@
 {% spaceless %}
-    <p>
-        Free online tool for decrypting/encrypting the well-known cryptographic hash function
-    </p>
+    <div class="col-4 pull-left a_container">
+        {% image '@MD5BusterBundle/Resources/public/images/ad_placeholder.png' output='images/ad_placeholder.png' %}
+            <img src="{{ asset_url }}"  />
+        {% endimage %}
+    </div>
+    <div class="col-8 pull-left">
+        <h2 translatable="dp.si"></h2>
+        <blockquote translatable="dp.wq"></blockquote>
+        <p>
+            <i translatable="dp.qf"></i>&nbsp;
+            <a href="https://en.wikipedia.org/wiki/MD5" target="_blank"><i>Wikipedia</i></a>
+        </p>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-8 pull-left">
+        <h2 translatable="bd.tdp"></h2>
+        <p>Lorem</p>
+        <input type="text" /><button type="button" translatable="decrypt"></button>
+    </div>
+    <div class="col-4 pull-right a_container">
+        {% image '@MD5BusterBundle/Resources/public/images/ad_placeholder_300_600.png' output='images/ad_placeholder_300_600.png' %}
+            <img src="{{ asset_url }}"  />
+        {% endimage %}
+    </div>
 {% endspaceless %}

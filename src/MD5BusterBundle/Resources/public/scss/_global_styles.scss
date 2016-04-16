@@ -1,0 +1,97 @@
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+* html .clearfix             { zoom: 1; } /* IE6 */
+*:first-child+html .clearfix { zoom: 1; } /* IE7 */
+
+a {
+  text-decoration: none;
+  color: #0088CC;
+  &:hover {
+    text-decoration: none;
+  }
+  &:active {
+    outline: none;
+  }
+  &:focus {
+    outline: none;
+  }
+  &[ target="_blank" ] {
+    &:after {
+      content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAVklEQVR4Xn3PgQkAMQhDUXfqTu7kTtkpd5RA8AInfArtQ2iRXFWT2QedAfttj2FsPIOE1eCOlEuoWWjgzYaB/IkeGOrxXhqB+uA9Bfcm0lAZuh+YIeAD+cAqSz4kCMUAAAAASUVORK5CYII=");
+      margin: 0 0 0 5px;
+    }
+  }
+}
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.text-center {
+  text-align: center;
+}
+@for $i from 1 through 12 {
+  .col-#{$i} {
+    @include define-col( $i );
+    @media (max-width: 768px) {
+      width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  };
+}
+.pull-left {
+  float: left;
+}
+.pull-right {
+  float: right;
+}
+blockquote {
+  font: 14px/22px normal helvetica, sans-serif;
+  margin: 10px 15px;
+  padding-left: 15px;
+  border-left: 3px solid #ccc;
+  font-style: italic;
+  white-space: pre-wrap;
+}
+.a_container {
+  max-width: 330px;
+  @media (max-width: 768px) {
+    max-width: 100%;
+    text-align: center;
+  }
+}
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #ffffff;
+  border-left: 1px solid rgba(0,0,0, .1);
+  border-right: 1px solid rgba(0,0,0, .1);
+  @media (min-width: 768px) {
+    width: 98%;
+  }
+  @media (min-width: 992px) {
+    width: 970px;
+  }
+  @media (min-width: 1200px) {
+    width: 1170px;
+  }
+  &:before, &:after {
+    display: table;
+    content: ' ';
+  }
+}

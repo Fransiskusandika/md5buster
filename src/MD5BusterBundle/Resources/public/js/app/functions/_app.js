@@ -2,19 +2,20 @@
 md5buster.AppFunctions = Marionette.extend({
     constructor: function ()
     {
-        this.fetchTemplates();
+        this.fetchComponents();
     },
-    fetchTemplates: function ()
+    fetchComponents: function ()
     {
         this.addExtraAppRegions();
         $.ajax({
             context: this,
             type: 'GET',
-            url: md5buster.apiRoutes.TEMPLATES_URL,
+            url: md5buster.apiRoutes.COMPONENTS_URL,
             dataType: 'json',
             success: function(response)
             {
-                md5buster.templates = response;
+                md5buster.templates = response.templates;
+                md5buster.translations = response.translations;
                 this.renderAppHeader();
                 this.fetchUserInfo();
             }
