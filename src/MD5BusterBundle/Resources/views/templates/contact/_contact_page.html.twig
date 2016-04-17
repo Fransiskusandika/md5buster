@@ -1,32 +1,24 @@
 {% spaceless %}
     <div class="col-12">
-        <h1 class="text-center" translatable="sh"></h1>
-    </div>
-    <div class="col-4 pull-left a_container">
-        {% image '@MD5BusterBundle/Resources/public/images/ad_placeholder.png' output='images/ad_placeholder.png' %}
-            <img src="{{ asset_url }}"  />
-        {% endimage %}
+        <h2 translatable="cp.cu">Contact</h2>
     </div>
     <div class="col-8 pull-left">
-        <h2 translatable="dp.si"></h2>
-        <blockquote translatable="dp.wq"></blockquote>
-        <p>
-            <i translatable="dp.qf"></i>&nbsp;
-            <a href="https://en.wikipedia.org/wiki/MD5" target="_blank"><i>Wikipedia</i></a>
-        </p>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-8 pull-left">
-        <h2 translatable="bd.ld"></h2>
-        <p translatable="dp.ld.p1"></p>
-        <p translatable="dp.ld.p2"></p>
-        <p translatable="dp.ld.p3"></p>
-        <form target="" method="post" class="decrypt-form" id="decrypt-form">
+        <form target="" method="post" class="contact-form" id="contact-form">
             <fieldset id="main-fieldset">
                 <div class="form-group">
-                    <label for="hash" translatable="dp.ph"></label>
-                    <input type="text" name="hash" id="hash" placeholder="|" required="required" />
-                    <span class="field-error" translatable="dp.imh"></span>
+                    <label for="name" translatable="cp.n"></label>
+                    <input type="text" name="name" id="name" required="required" />
+                    <span class="field-error" translatable="cp.ne"></span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" required="required" />
+                    <span class="field-error" translatable="cp.ie"></span>
+                </div>
+                <div class="form-group">
+                    <label for="feedback">Feedback</label>
+                    <textarea name="feedback" id="feedback" required="required"></textarea>
+                    <span class="field-error" translatable="cp.psf"></span>
                 </div>
                 <div class="form-group">
                     <label for="recaptcha" translatable="dp.sc"></label>
@@ -34,7 +26,7 @@
                     <span class="field-error" translatable="dp.csc"></span>
                 </div>
                 <div class="form-group">
-                    <button type="button"><a href="#" translatable="decrypt" id="submit-button"></a></button>
+                    <button type="button"><a href="#" translatable="cp.s" id="submit-button"></a></button>
                 </div>
             </fieldset>
             <fieldset class="loading" id="loading-fieldset">
@@ -49,14 +41,10 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="result" id="result-fieldset">
+            <fieldset class="success" id="success-fieldset">
                 <div class="block-loader-container">
                     <div class="block-loader">
-                        <h2 translatable="Results"></h2>
-                        <div id="results-area"></div>
-                        <div class="form-group">
-                            <button type="button"><a href="#" translatable="dp.ns" id="new-search-button"></a></button>
-                        </div>
+                        <h2 translatable="cp.tyfyf" class="text-center"></h2>
                     </div>
                 </div>
             </fieldset>
@@ -75,7 +63,7 @@
     </div>
     <div class="col-4 pull-left a_container">
         {% image '@MD5BusterBundle/Resources/public/images/ad_placeholder_300_600.png' output='images/ad_placeholder_300_600.png' %}
-            <img src="{{ asset_url }}"  />
+        <img src="{{ asset_url }}"  />
         {% endimage %}
     </div>
     <div class="clearfix"></div>

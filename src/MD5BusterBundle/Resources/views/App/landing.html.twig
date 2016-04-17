@@ -1,4 +1,24 @@
 {% extends '@MD5Buster/layout.html.twig' %}
+{% block meta_title %}
+    {% set description = 'Free online tool for decrypting/encrypting the well-known cryptographic hash function' %}
+    <title>{{ site_title }}</title>
+    <link rel="author" href="https://plus.google.com/117552068412499585385" />
+    <meta name="author" content="deepmikoto" />
+    <meta name="description" content="{{ description }}" />
+    <meta property="og:title" content="{{ site_title }}" />
+    <meta property="og:description" content="{{ description }}" />
+    <meta property="og:url" content="{{ url( 'md5buster_homepage' ) }}" />
+    <meta property="fb:app_id" content="{{ fb_app_id }}" />
+    <meta name="twitter:title" content="{{ site_title }}" />
+    <meta name="twitter:description" content="{{ description }}" />
+    <meta itemprop="name" content="{{ site_title }}" />
+    <meta itemprop="description" content="{{ description }}" />
+    {% image '@MD5BusterBundle/Resources/public/images/wallpaper_logo.png' output='images/wallpaper_logo.png' %}
+        <meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() ~ asset_url}}" />
+        <meta name="twitter:image" content="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" />
+        <meta itemprop="image" content="{{ app.request.getSchemeAndHttpHost() ~ asset_url }}" />
+    {% endimage %}
+{% endblock %}
 {% block body %}
     {% include '@MD5Buster/templates/body/_body_frame.html.twig' %}
 {% endblock %}

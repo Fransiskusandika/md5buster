@@ -7,8 +7,9 @@ md5buster.app = new Marionette.Application();
  * The main regions of our app
  */
 md5buster.app.addRegions({
-    header        : '#header',
-    body   : '#body'
+    header : '#header',
+    body   : '#body',
+    footer : '#footer'
 });
 
 /** we initialize app functions */

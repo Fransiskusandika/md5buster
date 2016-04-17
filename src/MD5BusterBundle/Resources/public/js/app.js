@@ -10,7 +10,9 @@ var root = root || '/';
 
 /** define api routes */
 md5buster.apiRoutes = {
-    COMPONENTS_URL: '_api/components'
+    COMPONENTS_URL  : '_api/components',
+    DECRYPT_UTL     : '_api/decrypt',
+    FEEDBACK_URL    : '_api/feedback'
 };
 
 /** define app constants */

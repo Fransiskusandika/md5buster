@@ -9,6 +9,10 @@ md5buster.FootNoteView = Marionette.ItemView.extend({
     events: {
         'click @ui.dismiss': 'dismissFootNote'
     },
+    initialize: function ()
+    {
+        md5buster.app.utilityFunctions.enableViewTranslationSupport( this );
+    },
     getTemplate: function()
     {
         /** @namespace md5buster.templates.footNote */

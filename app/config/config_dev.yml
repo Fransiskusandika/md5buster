@@ -30,12 +30,15 @@ monolog:
         #    type:   chromephp
         #    level:  info
 
+# Doctrine Configuration
+doctrine:
+    dbal:
+        logging: false
+
 swiftmailer:
     transport: "%mailer_transport%"
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
-    spool:
-        type: file
-        path: "%kernel.root_dir%/spool"
+    spool:  { type: memory }
 

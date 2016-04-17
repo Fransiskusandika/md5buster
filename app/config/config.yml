@@ -41,6 +41,8 @@ twig:
         site_title: MD5 Buster
         site_web_address: md5buster.com
         owner_email: deepmikoto@gmail.com
+        recaptcha_site_key: %recaptcha_site_key%
+        fb_app_id: %fb_app_id%
 
 # Assetic Configuration
 assetic:

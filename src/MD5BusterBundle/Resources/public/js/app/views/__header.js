@@ -43,6 +43,12 @@ md5buster.HeaderView = Marionette.LayoutView.extend({
         } else if ( page == 'encrypt' ) {
             this.ui.encryptLink.addClass( 'active' );
             this.ui.decryptLink.removeClass( 'active' );
+        } else if ( page == 'contact' ) {
+            this.ui.encryptLink.removeClass( 'active' );
+            this.ui.decryptLink.removeClass( 'active' );
+        } else if ( page == 'cookies' ) {
+            this.ui.encryptLink.removeClass( 'active' );
+            this.ui.decryptLink.removeClass( 'active' );
         }
     }
 });

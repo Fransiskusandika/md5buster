@@ -1,0 +1,19 @@
+{% extends '@MD5Buster/templates/email/_template.html.twig'%}
+{% block content %}
+    <p style="margin-top: 0;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 25px">Hi, Alex,</p>
+    <p style="margin-top: 0;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 25px">We have a new contact form message!</p>
+    <p style="margin-top: 25px;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 25px">
+        Date sent: <strong>{{ sentAt|date('M jS, Y H:i:s') }}</strong>
+    </p>
+    <p style="margin-top: 25px;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 25px">
+        Name: <strong>{{ name }}</strong>
+    </p>
+    <p style="margin-top: 25px;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 25px">
+        Email: <strong>{{ email }}</strong>
+    </p>
+    <p style="margin-top: 25px;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 25px;white-space: pre-wrap">{{ feedback }}</p>
+    <p style="margin-top: 25px;color: #565656;font-family: Georgia,serif;font-size: 120%;line-height: 1.2;margin-bottom: 25px">
+        Best,<br>
+        MD5 Buster Hash Cron<br>
+    </p>
+{% endblock %}

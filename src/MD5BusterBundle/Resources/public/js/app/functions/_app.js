@@ -17,6 +17,7 @@ md5buster.AppFunctions = Marionette.extend({
                 md5buster.templates = response.templates;
                 md5buster.translations = response.translations;
                 this.renderAppHeader();
+                this.renderAppFooter();
                 this.fetchUserInfo();
             }
         });
@@ -37,6 +38,11 @@ md5buster.AppFunctions = Marionette.extend({
         /** @namespace md5buster.app.header */
         md5buster.app.header.show( new md5buster.HeaderView({ model: new md5buster.AppHeaderModel }) );
     },
+    renderAppFooter: function ()
+    {
+        /** @namespace md5buster.app.footer */
+        md5buster.app.footer.show( new md5buster.FooterView() );
+    },
     fetchUserInfo: function()
     {
         this.startRouter();
@@ -56,7 +62,7 @@ md5buster.AppFunctions = Marionette.extend({
     },
     removeInitialLoader: function ()
     {
-        $( '.initial-loader-container' ).fadeOut( 'slow', function (){
+        $( '.initial-site-loader' ).fadeOut( 'slow', function (){
             $( this).remove();
         });
     },
@@ -71,8 +77,7 @@ md5buster.AppFunctions = Marionette.extend({
                 new md5buster.FootNoteView({
                     model: new md5buster.FootNoteModel({
                         type: 'cookie',
-                        message: 'This site uses cookies in order to improve your experience. By continuing to browse the site ' +
-                        'you are agreeing to our use of cookies. <a href="' + '/help' + '">More Info</a>'
+                        message: '' // will be filled by translator for type cookie
                     })
                 })
             );

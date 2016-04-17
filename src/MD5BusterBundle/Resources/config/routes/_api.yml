@@ -1,3 +1,9 @@
 md5buster_api_components:
     path:     /components
     defaults: { _controller: MD5BusterBundle:Api:components }
+md5buster_api_decrypt:
+    path:     /decrypt
+    defaults: { _controller: MD5BusterBundle:Api:decrypt }
+md5buster_api_feedback:
+    path:     /feedback
+    defaults: { _controller: MD5BusterBundle:Api:feedback }

@@ -24,3 +24,5 @@ parameters:
 
     recaptcha_site_key: key
     recaptcha_secret_key: key
+
+    fb_app_id: 1234

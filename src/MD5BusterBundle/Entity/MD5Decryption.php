@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MD5Decryption
  *
- * @ORM\Table(name="md5_decryption")
+ * @ORM\Table(name="md5_decryption",indexes={@ORM\Index(name="search_idx", columns={"hash"})})
  * @ORM\Entity()
  */
 class MD5Decryption

@@ -3,4 +3,10 @@ md5buster_homepage:
     defaults: { _controller: MD5BusterBundle:App:home }
 md5buster_encrypt:
     path:     /encrypt
-    defaults: { _controller: MD5BusterBundle:App:encrypt }
+    defaults: { _controller: MD5BusterBundle:App:home }
+md5buster_cookies:
+    path:     /cookies
+    defaults: { _controller: MD5BusterBundle:App:home }
+md5buster_contact:
+    path:     /contact
+    defaults: { _controller: MD5BusterBundle:App:home }

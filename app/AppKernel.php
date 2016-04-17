@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new \Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new \JMS\SerializerBundle\JMSSerializerBundle(),
             new \Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new \Lsw\ApiCallerBundle\LswApiCallerBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

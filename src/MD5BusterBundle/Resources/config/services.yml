@@ -2,3 +2,6 @@ services:
     md5buster.api.components:
             class: MD5BusterBundle\Services\ComponentsService
             arguments: [ "@templating", "@serializer" ]
+    md5buster.api.md5:
+            class: MD5BusterBundle\Services\MD5Service
+            arguments: [ "@service_container", "@doctrine.orm.entity_manager" ]

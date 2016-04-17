@@ -1,0 +1,12 @@
+{% spaceless %}
+    <span class="value">
+        <span>
+            <%=decryption%>
+        </span>
+    </span>
+    <span class="actions">
+        {% image '@MD5BusterBundle/Resources/public/images/clipboard.png' output='images/clipboard.png' %}
+            <img src="{{ asset_url }}"  alt="copy" id="copy-button" />
+        {% endimage %}
+    </span>
+{% endspaceless %}
