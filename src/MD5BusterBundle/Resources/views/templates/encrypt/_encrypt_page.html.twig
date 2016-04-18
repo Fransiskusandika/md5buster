@@ -1,32 +1,14 @@
 {% spaceless %}
     <div class="col-12">
-        <h1 class="text-center" translatable="sh"></h1>
-    </div>
-    <div class="col-4 pull-left a_container">
-        {% image '@MD5BusterBundle/Resources/public/images/ad_placeholder.png' output='images/ad_placeholder.png' %}
-            <img src="{{ asset_url }}"  />
-        {% endimage %}
+        <h2 translatable="ep.le"></h2>
     </div>
     <div class="col-8 pull-left">
-        <h2 translatable="dp.si"></h2>
-        <blockquote translatable="dp.wq"></blockquote>
-        <p>
-            <i translatable="dp.qf"></i>&nbsp;
-            <a href="https://en.wikipedia.org/wiki/MD5" target="_blank"><i>Wikipedia</i></a>
-        </p>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-8 pull-left">
-        <h2 translatable="bd.ld"></h2>
-        <p translatable="dp.ld.p1"></p>
-        <p translatable="dp.ld.p2"></p>
-        <p translatable="dp.ld.p3"></p>
-        <form target="" method="post" class="decrypt-form" id="decrypt-form">
+        <form target="" method="post" class="encrypt-form" id="encrypt-form">
             <fieldset id="main-fieldset">
                 <div class="form-group">
-                    <label for="hash" translatable="dp.ph"></label>
-                    <input type="text" name="hash" id="hash" placeholder="|" required="required" />
-                    <span class="field-error" translatable="dp.imh"></span>
+                    <label for="text" translatable="ep.tte"></label>
+                    <input type="text" name="text" id="text" required="required" />
+                    <span class="field-error" translatable="ep.te"></span>
                 </div>
                 <div class="form-group">
                     <label for="recaptcha" translatable="dp.sc"></label>
@@ -34,7 +16,7 @@
                     <span class="field-error" translatable="dp.csc"></span>
                 </div>
                 <div class="form-group">
-                    <ul class="button-container"><li><a href="#" translatable="Decrypt" id="submit-button"></a></li></ul>
+                    <ul class="button-container"><li><a href="#" translatable="Encrypt" id="submit-button"></a></li></ul>
                 </div>
             </fieldset>
             <fieldset class="loading" id="loading-fieldset">
@@ -53,13 +35,13 @@
                 <div class="block-loader-container">
                     <div class="block-loader">
                         <fieldset class="subject">
-                            <legend>Hash</legend>
-                            <h5 class="text-center" id="text-to-decrypt"></h5>
+                            <legend translatable="ep.tte"></legend>
+                            <h5 class="text-center" id="text-to-encrypt"></h5>
                         </fieldset>
-                        <h2 translatable="Results"></h2>
+                        <h2 translatable="Encryption"></h2>
                         <div id="results-area"></div>
                         <div class="form-group">
-                            <ul class="button-container"><li><a href="#" translatable="dp.ns" id="new-search-button"></a></li></ul>
+                            <ul class="button-container"><li><a href="#" translatable="ep.ne" id="new-encryption-button"></a></li></ul>
                         </div>
                     </div>
                 </div>
@@ -79,7 +61,7 @@
     </div>
     <div class="col-4 pull-left a_container">
         {% image '@MD5BusterBundle/Resources/public/images/ad_placeholder_300_600.png' output='images/ad_placeholder_300_600.png' %}
-            <img src="{{ asset_url }}"  />
+        <img src="{{ asset_url }}"  />
         {% endimage %}
     </div>
     <div class="clearfix"></div>

@@ -98,7 +98,7 @@ class DecryptCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $lastDecryption = $input->getOption('lastDecryption');
         if( $lastDecryption == null ){
-            $lastDecryption = $em->getRepository('MD5BusterBundle:MD5Decryption')->findOneBy([],['id' => 'DESC'])->getDecryption();
+            $lastDecryption = $em->getRepository('MD5BusterBundle:MD5Decryption')->findOneBy([ 'userAdded' => false ],['id' => 'DESC'])->getDecryption();
         }
         //$output->writeln('Starting script for ' . $time . ' seconds ' );
         $count = 1;

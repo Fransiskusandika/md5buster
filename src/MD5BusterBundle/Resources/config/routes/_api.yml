@@ -1,9 +1,12 @@
 md5buster_api_components:
     path:     /components
-    defaults: { _controller: MD5BusterBundle:Api:components }
+    defaults: { _controller: MD5BusterBundle:Api:components, _format: 'json' }
 md5buster_api_decrypt:
     path:     /decrypt
-    defaults: { _controller: MD5BusterBundle:Api:decrypt }
+    defaults: { _controller: MD5BusterBundle:Api:decrypt, _format: 'json' }
+md5buster_api_encrypt:
+    path:     /encrypt
+    defaults: { _controller: MD5BusterBundle:Api:encrypt, _format: 'json' }
 md5buster_api_feedback:
     path:     /feedback
-    defaults: { _controller: MD5BusterBundle:Api:feedback }
+    defaults: { _controller: MD5BusterBundle:Api:feedback, _format: 'json' }

@@ -70,6 +70,7 @@ md5buster.DecryptPage = Marionette.LayoutView.extend({
         recaptcha: '#recaptcha',
         decryptForm: '#decrypt-form',
         hash: '#hash',
+        textToDecrypt: '#text-to-decrypt',
         submitButton: '#submit-button',
         newSearchButton: '#new-search-button',
         tryAgainButton: '#try-again-button',
@@ -170,7 +171,7 @@ md5buster.DecryptPage = Marionette.LayoutView.extend({
             $.ajax({
                 context: this,
                 method: 'POST',
-                url: md5buster.apiRoutes.DECRYPT_UTL,
+                url: md5buster.apiRoutes.DECRYPT_URL,
                 data: {
                     hash: this.ui.hash.val(),
                     securityCode: md5buster.app.utilityFunctions.getRecaptchaTestResponse( this.model.get( 'recaptchaWidgetId' ) )
@@ -182,6 +183,7 @@ md5buster.DecryptPage = Marionette.LayoutView.extend({
                     /** @namespace response.payload */
                     collection: new md5buster.DecryptionResultsCollection( response.payload )
                 }));
+                this.ui.textToDecrypt.text( this.ui.hash.val() );
                 this.ui.loadingFieldset.css({ display: 'none' });
                 this.ui.resultFieldset.css({ display: 'block' });
 
@@ -196,7 +198,9 @@ md5buster.DecryptPage = Marionette.LayoutView.extend({
     resetDecryptForm: function ( e )
     {
         e.preventDefault();
+        grecaptcha.reset();
         this.ui.hash.val('').removeClass('valid').closest('.form-group').removeClass('error');
+        this.ui.textToDecrypt.text('');
         this.ui.ajaxErrorMessage.html('');
         this.ui.errorFieldset.css({ display: 'none' });
         this.ui.resultFieldset.css({ display: 'none' });

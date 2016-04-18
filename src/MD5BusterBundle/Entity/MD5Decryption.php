@@ -36,6 +36,18 @@ class MD5Decryption
     private $decryption;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="u_a", type="boolean")
+     */
+    private $userAdded;
+
+    public function __construct()
+    {
+        $this->setUserAdded(false);
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -91,5 +103,29 @@ class MD5Decryption
     public function getDecryption()
     {
         return $this->decryption;
+    }
+
+    /**
+     * Set userAdded
+     *
+     * @param boolean $userAdded
+     *
+     * @return MD5Decryption
+     */
+    public function setUserAdded($userAdded)
+    {
+        $this->userAdded = $userAdded;
+
+        return $this;
+    }
+
+    /**
+     * Get userAdded
+     *
+     * @return boolean
+     */
+    public function getUserAdded()
+    {
+        return $this->userAdded;
     }
 }

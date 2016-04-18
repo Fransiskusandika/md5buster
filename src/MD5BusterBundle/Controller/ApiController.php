@@ -2,6 +2,7 @@
 
 namespace MD5BusterBundle\Controller;
 
+use MD5BusterBundle\Entity\MD5Decryption;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -73,6 +74,58 @@ class ApiController extends Controller
                 }
             } else {
                 $responseData = $responseData = $this->createErrorResponseArray( 'Invalid md5 hash' );
+            }
+        } else {
+            $responseData = $responseData = $this->createErrorResponseArray( 'Invalid request method' );
+        }
+        $response = new JsonResponse(
+            $responseData, $responseData['code']
+        );
+        $response->headers->set( 'Content-Type', 'application/json' );
+
+        return $response;
+    }
+
+    /**
+     * decrypt action
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function encryptAction( Request $request )
+    {
+        if ( $request->isMethod( 'POST' ) ) {
+            $text = $request->get('text');
+            if ( is_string( $text ) && strlen( $text ) > 0 ) {
+                $securityCode = $request->get('securityCode');
+                $md5 = $this->get('md5buster.api.md5');
+                if ( $md5->googleRecaptchaSecurityCheck( $securityCode ) ) {
+                    $hash = md5( $text );
+                    $em = $this->getDoctrine()->getManager();
+                    $decryptions = $em->getRepository('MD5BusterBundle:MD5Decryption')->findBy([ 'hash' => $hash ]);
+                    $shouldAdd = false;
+                    foreach( $decryptions as $decryption ){
+                        if ( $decryption->getDecryption() != $text ){
+                            $shouldAdd = true;
+                        }
+                    }
+                    if( $shouldAdd == true || count( $decryptions ) == 0 ){
+                        $md5Decryption = new MD5Decryption();
+                        $md5Decryption
+                            ->setHash( $hash )
+                            ->setDecryption( $text )
+                            ->setUserAdded( true )
+                        ;
+                        $em->persist( $md5Decryption );
+                        $em->flush();
+                    }
+                    $payload = [ [ 'decryption' => $hash ] ]; // i'm lazy for using the same collection view, i know :)
+                    $responseData = $this->createSuccessResponseArray( $payload );
+                } else {
+                    $responseData = $this->createErrorResponseArray( 'Security check failed' );
+                }
+            } else {
+                $responseData = $responseData = $this->createErrorResponseArray( 'Invalid text content' );
             }
         } else {
             $responseData = $responseData = $this->createErrorResponseArray( 'Invalid request method' );

@@ -119,48 +119,43 @@ html {
       }
       &>.body-container {
         padding: 61px 5px 0 5px;
-        .decrypt-page {
-          .decrypt-form {
-            fieldset {
-              h2 {
-                margin-top: 0;
+        .decryption-results {
+          list-style-type: none;
+          padding: 0;
+          margin-bottom: 30px;
+          .decryption-item {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            position: relative;
+            span {
+              display: inline-block;
+              &.value {
+                width: 100%;
+                padding-right: 20px;
+                &>span {
+                  width: 98%;
+                  border-bottom: 1px solid rgba(0,0,0,0.1);
+                }
               }
-              .decryption-results {
-                list-style-type: none;
-                padding: 0;
-                .decryption-item {
-                  display: block;
-                  width: 100%;
-                  margin-bottom: 10px;
-                  position: relative;
-                  span {
-                    display: inline-block;
-                    &.value {
-                      width: 100%;
-                      padding-right: 20px;
-                      &>span {
-                        width: 98%;
-                        border-bottom: 1px solid rgba(0,0,0,0.1);
-                      }
-                    }
-                    &.actions {
-                      position: absolute;
-                      right: 0;
-                      &>img {
-                        cursor: pointer;
-                      }
-                    }
-                  }
+              &.actions {
+                position: absolute;
+                right: 0;
+                &>img {
+                  cursor: pointer;
                 }
               }
             }
           }
         }
-        .contact-page {
+        .decrypt-page {
+
+        }
+        .contact-page, .encrypt-page {
           padding-bottom: 150px;
           fieldset {
             input[type="text"], input[type="email"] {
-              text-align: start;
+              text-align: left;
             }
           }
         }

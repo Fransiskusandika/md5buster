@@ -3,6 +3,7 @@ md5buster.Router = Marionette.AppRouter.extend({
     routes:
     {
         '': 'decryptAction',
+        'encrypt': 'encryptAction',
         'contact': 'contactAction',
         'cookies': 'cookiesAction',
         ':placeholder': 'undefinedAction',
@@ -26,6 +27,13 @@ md5buster.Router = Marionette.AppRouter.extend({
     {
         md5buster.app.body.show( new md5buster.DecryptPage({
             model: new md5buster.DecryptPageModel()
+        }));
+        this.scrollPageToTop();
+    },
+    encryptAction: function()
+    {
+        md5buster.app.body.show( new md5buster.EncryptPage({
+            model: new md5buster.EncryptPageModel()
         }));
         this.scrollPageToTop();
     },

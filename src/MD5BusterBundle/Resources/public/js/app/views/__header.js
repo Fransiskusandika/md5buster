@@ -5,7 +5,7 @@ md5buster.HeaderView = Marionette.LayoutView.extend({
     model: new md5buster.AppHeaderModel,
     ui: {
         decryptLink: '#decrypt-link',
-        encryptLink: '#encryptLink',
+        encryptLink: '#encrypt-link',
         USUKFlag: '#us_uk_flag',
         ROFlag: '#ro_flag'
     },

@@ -55,6 +55,7 @@ class ComponentsService
             'footer' => $twigEngine->render( '@MD5Buster/templates/footer/_footer.html.twig' ),
             'footNote' => $twigEngine->render( '@MD5Buster/templates/footnote/_default.html.twig' ),
             'decryptPage' => $twigEngine->render( '@MD5Buster/templates/decrypt/_decrypt_page.html.twig' ),
+            'encryptPage' => $twigEngine->render( '@MD5Buster/templates/encrypt/_encrypt_page.html.twig' ),
             'decryptionResultItemView' => $twigEngine->render( '@MD5Buster/templates/decrypt/decryption_result_item_view.html.twig' ),
             'contactPage' => $twigEngine->render( '@MD5Buster/templates/contact/_contact_page.html.twig' ),
             'cookiePage' => $twigEngine->render( '@MD5Buster/templates/cookie/_cookie_page.html.twig' )
@@ -82,6 +83,14 @@ class ComponentsService
             'Encrypt' => [
                 'us_uk' => 'Encrypt',
                 'ro' => 'Encripteaz&abreve;'
+            ],
+            'Encryption' => [
+                'us_uk' => 'Encryption',
+                'ro' => 'Encriptare'
+            ],
+            'encrypt' => [
+                'us_uk' => 'encrypt',
+                'ro' => 'encripteaz&abreve;'
             ],
             'Results' => [
                 'us_uk' => 'Results',
@@ -134,12 +143,12 @@ class ComponentsService
                 'ro' => 'Lipe&scedil;te hash-ul MD5 aici'
             ],
             'dp.imh' => [
-                'us_uk' => 'not a valid md5 hash',
-                'ro' => 'nu este un hash md5 valid'
+                'us_uk' => 'Not a valid md5 hash',
+                'ro' => 'Nu este un hash md5 valid'
             ],
             'dp.csc' => [
-                'us_uk' => 'security check not completed',
-                'ro' => 'nu a&tcedil;i completat verificarea de securitate'
+                'us_uk' => 'Security check not completed',
+                'ro' => 'Nu a&tcedil;i completat verificarea de securitate'
             ],
             'dp.ta' => [
                 'us_uk' => 'Try again',
@@ -165,9 +174,25 @@ class ComponentsService
                 'us_uk' => 'Copy to clipboard',
                 'ro' => 'Copia&tcedil;i &icirc;n clipboard'
             ],
+            'ep.tte' => [
+                'us_uk' => 'Text to encrypt',
+                'ro' => 'Text de encriptat'
+            ],
+            'ep.te' => [
+                'us_uk' => 'Text to encrypt field is empty',
+                'ro' => 'C&acirc;mpul pentru textul de encryptat este gol'
+            ],
             'bd.ld' => [
                 'us_uk' => 'Let\'s decrypt!',
                 'ro' => 'Hai s&abreve; decript&abreve;m!'
+            ],
+            'ep.le' => [
+                'us_uk' => 'Let\'s encrypt!',
+                'ro' => 'Hai s&abreve; encript&abreve;m!'
+            ],
+            'ep.ne' => [
+                'us_uk' => 'new encryption',
+                'ro' => 'encriptare nou&abreve;'
             ],
             'cm' => [
                 'us_uk' =>

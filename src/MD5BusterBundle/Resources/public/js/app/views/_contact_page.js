@@ -130,6 +130,7 @@ md5buster.ContactPage = Marionette.ItemView.extend({
     resetContactForm: function ( e )
     {
         e.preventDefault();
+        grecaptcha.reset();
         this.ui.name.val('').closest('.form-group').removeClass('error');
         this.ui.email.val('').closest('.form-group').removeClass('error');
         this.ui.feedback.val('').closest('.form-group').removeClass('error');
