@@ -270,8 +270,8 @@ class DecryptCommand extends ContainerAwareCommand
                                 //$output->writeln('Time limit reached! Added ' . $count . ' new entries! Exiting ...');
                                 $em->flush();
                                 $em->clear();
-                                //$this->sendHashReport( $startedAt, new \DateTime(), $count, $this->getMemoryUsage() );
-                                //sleep( 3 );
+                                $this->sendHashReport( $startedAt, new \DateTime(), $count, $this->getMemoryUsage() );
+                                sleep( 2 );
                                 die;
                             }
                             $combination = $chars[$i1].$chars[$i2].$chars[$i3].$chars[$i4];
