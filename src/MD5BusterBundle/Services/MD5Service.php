@@ -31,8 +31,7 @@ class MD5Service
      */
     public function googleRecaptchaSecurityCheck( $securityCode )
     {
-        /** @noinspection PhpParamsInspection */
-        $output = $this->container->get('api_caller')->call(
+       /* $output = $this->container->get('api_caller')->call( // todo: figure out whi this does not work on deepmikoto.com live server
             new HttpPostJson(
                 'https://www.google.com/recaptcha/api/siteverify',
                 [
@@ -41,7 +40,26 @@ class MD5Service
                 ],
                 true // as associative array
             )
-        );
+        );*/
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL,"https://www.google.com/recaptcha/api/siteverify");
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS,
+                http_build_query([
+                    'secret' => $this->container->getParameter('recaptcha_secret_key'),
+                    'response' => $securityCode
+                ])
+            );
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+            $output = curl_exec ($ch);
+            curl_close ($ch);
+
+        } catch( \Exception $e ) {
+            $output = [];
+        }
+        var_dump($output);die;
+
         if( array_key_exists( 'success', $output  ) && $output['success'] == true ){
             return true;
         } else {
