@@ -6,7 +6,7 @@ md5buster.ContactPage = Marionette.ItemView.extend({
     className: 'contact-page',
     model: new md5buster.ContactPageModel,
     ui: {
-        recaptcha: '#recaptcha',
+        recaptcha: '#contact-recaptcha',
         name: '#name',
         email: '#email',
         feedback: '#feedback',

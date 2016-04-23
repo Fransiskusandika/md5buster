@@ -67,7 +67,7 @@ md5buster.DecryptPage = Marionette.LayoutView.extend({
         resultsArea: '#results-area'
     },
     ui: {
-        recaptcha: '#recaptcha',
+        recaptcha: '#decrypt-recaptcha',
         decryptForm: '#decrypt-form',
         hash: '#hash',
         textToDecrypt: '#text-to-decrypt',

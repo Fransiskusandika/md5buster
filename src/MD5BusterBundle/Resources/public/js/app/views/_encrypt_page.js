@@ -9,7 +9,7 @@ md5buster.EncryptPage = Marionette.LayoutView.extend({
         resultsArea: '#results-area'
     },
     ui: {
-        recaptcha: '#recaptcha',
+        recaptcha: '#encrypt-recaptcha',
         encryptForm: '#encrypt-form',
         text: '#text',
         textToEncrypt: '#text-to-encrypt',
@@ -76,7 +76,6 @@ md5buster.EncryptPage = Marionette.LayoutView.extend({
         if( valid ){
             this.ui.mainFieldset.css({ display: 'none' });
             this.ui.loadingFieldset.css({ display: 'block' });
-            grecaptcha.reset();
             $.ajax({
                 context: this,
                 method: 'POST',
