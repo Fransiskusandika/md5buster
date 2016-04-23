@@ -47,7 +47,7 @@ class MD5Service
             $ch = curl_init();
 
             // set url
-            curl_setopt($ch, CURLOPT_URL, "example.com");
+            curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
 
             //return the transfer as a string
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
