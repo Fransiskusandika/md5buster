@@ -76,6 +76,7 @@ md5buster.EncryptPage = Marionette.LayoutView.extend({
         if( valid ){
             this.ui.mainFieldset.css({ display: 'none' });
             this.ui.loadingFieldset.css({ display: 'block' });
+            grecaptcha.reset();
             $.ajax({
                 context: this,
                 method: 'POST',

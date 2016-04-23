@@ -42,6 +42,25 @@ class MD5Service
                 true // as associative array
             )
         );
+        try {
+            // create curl resource
+            $ch = curl_init();
+
+            // set url
+            curl_setopt($ch, CURLOPT_URL, "example.com");
+
+            //return the transfer as a string
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+            // $output contains the output string
+            $output = curl_exec($ch);
+
+            // close curl resource to free up system resources
+            curl_close($ch);
+        } catch ( \Exception $e ){
+            var_dump($e);die;
+        }
+
         var_dump($output);die;
         if( array_key_exists( 'success', $output  ) && $output['success'] == true ){
             return true;
