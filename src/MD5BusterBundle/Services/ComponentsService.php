@@ -197,10 +197,10 @@ class ComponentsService
             'cm' => [
                 'us_uk' =>
                     "This site uses cookies in order to improve your experience.\n" .
-                    "By continuing to browse the site you are agreeing to our use of cookies.",
+                    "By continuing to browse the site you are agreeing to our use of cookies",
                 'ro' =>
                     "Acest site foloseste cookies pentru a-ti imbunatatii experienta de navigare.\n" .
-                    "Continuand navigarea iti exprimi acordul in privinta folosirii lor."
+                    "Continuand navigarea iti exprimi acordul in privinta folosirii lor"
             ],
             'cp.cu' => [
                 'us_uk' => 'Contact us',
