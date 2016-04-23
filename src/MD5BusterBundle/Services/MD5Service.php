@@ -31,7 +31,7 @@ class MD5Service
      */
     public function googleRecaptchaSecurityCheck( $securityCode )
     {
-        $output = $this->container->get('api_caller')->call( // todo: figure out whi this does not work on deepmikoto.com live server
+        /*$output = $this->container->get('api_caller')->call( // todo: figure out whi this does not work on deepmikoto.com live server
             new HttpPostJson(
                 'https://www.google.com/recaptcha/api/siteverify',
                 [
@@ -40,8 +40,8 @@ class MD5Service
                 ],
                 true // as associative array
             )
-        );
-        /*try {
+        );*/
+        try {
             $params = [
                 'secret' => $this->container->getParameter('recaptcha_secret_key'),
                 'response' => $securityCode
@@ -56,7 +56,6 @@ class MD5Service
         } catch( \Exception $e ) {
             $output = [];
         }
-        var_dump($output);die;*/
 
         if( array_key_exists( 'success', $output  ) && $output['success'] == true ){
             return true;
