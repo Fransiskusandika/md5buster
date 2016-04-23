@@ -42,15 +42,13 @@ class MD5Service
             )
         );*/
         try {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL,"https://www.google.com/recaptcha/api/siteverify");
+            $params = [
+                'secret' => $this->container->getParameter('recaptcha_secret_key'),
+                'response' => $securityCode
+            ];
+            $ch = curl_init("https://www.google.com/recaptcha/api/siteverify");
             curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS,
-                http_build_query([
-                    'secret' => $this->container->getParameter('recaptcha_secret_key'),
-                    'response' => $securityCode
-                ])
-            );
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
             curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
             $output = curl_exec ($ch);
             curl_close ($ch);
