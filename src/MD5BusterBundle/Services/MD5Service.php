@@ -42,6 +42,7 @@ class MD5Service
                 true // as associative array
             )
         );
+        var_dump($output);die;
         if( array_key_exists( 'success', $output  ) && $output['success'] == true ){
             return true;
         } else {
