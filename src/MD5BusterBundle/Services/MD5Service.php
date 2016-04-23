@@ -50,7 +50,7 @@ class MD5Service
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
             curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-            $output = curl_exec ($ch);
+            $output = json_decode( curl_exec ($ch), true );
             curl_close ($ch);
 
         } catch( \Exception $e ) {
