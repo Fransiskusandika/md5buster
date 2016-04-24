@@ -194,17 +194,61 @@ class ComponentsService
                 'us_uk' => 'new encryption',
                 'ro' => 'encriptare nou&abreve;'
             ],
+            'ep.p1' => [
+                'us_uk' => 'Whether you want to check the integrity of a file or convert something to a md5 hash, this is where you can do it!',
+                'ro' => 'Fie c&abreve; vrei s&abreve; verifici integritatea unui fi&scedil;ier sau s&abreve; transformi ceva &icirc;ntr-un hash md5, ' .
+                    'aici o po&tcedil;i face!'
+            ],
+            'ep.p2' => [
+                'us_uk' => 'We recommend you don\'t use the hash in a public environment&mdash;like a website, if it contains sensible information.',
+                'ro' => 'Recomand&abreve;m s&abreve; nu folose&scedil;ti hash-ul &icirc;ntr-un mediu public&mdash;un website de exemplu, dac&abreve; ' .
+                    'con&tcedil;ine informa&tcedil;ii importante.'
+            ],
+            'ep.p3' => [
+                'us_uk' =>
+                    'There\'s no special techniques involved here, we just pass your text to the md5 function and return the result back to you. ' .
+                    'So go ahead and use the form below to obtain the hash and don\'t forget to copy it if you know you\'ll need it for later use.',
+                'ro' =>
+                    'Aici nu aplic&abreve;m vreo tehnic&abreve; special&abreve;, doar lu&abreve;m textul introdus de tine, aplic&abreve;m ' .
+                    'func&tcedil;ia md5 &scedil;i &icirc;&tcedil;i ar&abreve;t&abreve;m rezultatul ob&tcedil;inut. A&scedil;a c&abreve; ' .
+                    'folose&scedil;te formularul de mai jos pentru a ob&tcedil;ine hash-ul dorit &scedil;i nu uita s&abreve; &icirc;l copiezi dac&abreve; ' .
+                    '&scedil;tii c&abreve; &icirc;&tcedil;i va trebui mai t&acirc;rziu.'
+            ],
             'cm' => [
                 'us_uk' =>
                     "This site uses cookies in order to improve your experience.\n" .
                     "By continuing to browse the site you are agreeing to our use of cookies",
                 'ro' =>
-                    "Acest site foloseste cookies pentru a-ti imbunatatii experienta de navigare.\n" .
-                    "Continuand navigarea iti exprimi acordul in privinta folosirii lor"
+                    "Acest site folose&scedil;te cookies pentru a-&tcedil;i &icirc;mbun&abreve;t&abreve;&tcedil;ii experien&tcedil;a de navigare.\n" .
+                    "Continu&acirc;nd navigarea i&tcedil;i exprimi acordul &icirc;n privin&tcedil;a folosirii lor"
+            ],
+            'cm.l' => [
+                'us_uk' =>
+                    "&mdash;more info",
+                'ro' =>
+                    "&mdash;mai multe informa&tcedil;ii"
             ],
             'cp.cu' => [
-                'us_uk' => 'Contact us',
-                'ro' => 'Contacteaz&abreve;-ne'
+                'us_uk' => 'Contact us!',
+                'ro' => 'Contacteaz&abreve;-ne!'
+            ],
+            'cp.p1' => [
+                'us_uk' => 'We are constantly improving and adapting the site so our users can get the most out of it.',
+                'ro' =>
+                    '&Icirc;mbun&abreve;t&abreve;&tcedil;im &scedil;i adapt&abreve;m &icirc;n mod continuu site-ul astfel ' .
+                    '&icirc;nc&acirc;t utilizatorii no&scedil;trii sa poat&abreve; profita la maxim de el.'
+            ],
+            'cp.p2' => [
+                'us_uk' =>
+                    'If you think something needs improving or you would like a certain feature to be available, ' .
+                    'don\'t hesitate to le us know!',
+                'ro' =>
+                    'Dac&abreve; crezi c&abreve; ceva ar putea fi &icirc;mbun&abreve;t&abreve;&tcedil;it sau &tcedil;i-ar place ' .
+                    's&abreve; fie disponibil&abreve; o anumit&abreve; func&tcedil;ionalitate, nu ezita s&abreve; ne anun&tcedil;i!'
+            ],
+            'cp.p3' => [
+                'us_uk' => 'We look forward to hearing from you! &#9786;',
+                'ro' => 'Abia a&scedil;tept&abreve;m s&abreve; auzim de la tine! &#9786;'
             ],
             'cp.tyfyf' => [
                 'us_uk' => 'Thank you for your feedback!',

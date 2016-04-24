@@ -57,11 +57,13 @@ md5buster.AppFunctions = Marionette.extend({
             dataType: 'json',
             success: function( response )
             {
-                md5buster.app.hashCount.show(
-                    new md5buster.HashCountView({
-                        model: new md5buster.HashCountModel({ count: response.payload.count })
-                    })
-                );
+                if ( response.payload != undefined && response.payload.count != undefined ) {
+                    md5buster.app.hashCount.show(
+                        new md5buster.HashCountView({
+                            model: new md5buster.HashCountModel({ count: response.payload.count })
+                        })
+                    );
+                }
             }
         });
     },
@@ -79,7 +81,7 @@ md5buster.AppFunctions = Marionette.extend({
     removeInitialLoader: function ()
     {
         $( '.initial-site-loader' ).fadeOut( 'slow', function (){
-            $( this).remove();
+            $( this ).remove();
         });
     },
     setPageTitle: function( title )

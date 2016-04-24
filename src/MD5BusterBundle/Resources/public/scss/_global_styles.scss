@@ -153,7 +153,7 @@ blockquote {
     width: 970px;
   }
   @media (min-width: 1200px) {
-    width: 1170px;
+    width: 1024px;
   }
   &:before, &:after {
     display: table;
@@ -166,6 +166,7 @@ form {
   padding: 30px;
   width: 100%;
   border: 1px solid rgba(0,0,0,0.1);
+  margin-top: 30px;
   fieldset {
     margin: 0;
     padding: 0;
@@ -296,7 +297,7 @@ form {
       }
       &.error {
         input[type="text"], input[type="email"], textarea {
-          border-bottom: 2px solid #ff0000;
+          border-bottom: 2px solid #ff0000!important;
         }
         span {
           &.field-error {

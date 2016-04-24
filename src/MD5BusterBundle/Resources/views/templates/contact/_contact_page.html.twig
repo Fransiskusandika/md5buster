@@ -3,21 +3,24 @@
         <h2 translatable="cp.cu"></h2>
     </div>
     <div class="col-8 pull-left">
+        <p translatable="cp.p1"></p>
+        <p translatable="cp.p2"></p>
+        <p translatable="cp.p3"></p>
         <form target="" method="post" class="contact-form" id="contact-form">
             <fieldset id="main-fieldset">
                 <div class="form-group">
                     <label for="name" translatable="cp.n"></label>
-                    <input type="text" name="name" id="name" required="required" />
+                    <input type="text" name="name" id="name" required="required" placeholder="John Smith" />
                     <span class="field-error" translatable="cp.ne"></span>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email" required="required" />
+                    <input type="email" name="email" id="email" required="required" placeholder="email@domain.com" />
                     <span class="field-error" translatable="cp.ie"></span>
                 </div>
                 <div class="form-group">
                     <label for="feedback">Feedback</label>
-                    <textarea name="feedback" id="feedback" required="required"></textarea>
+                    <textarea name="feedback" id="feedback" required="required" placeholder="Awesome stuff!"></textarea>
                     <span class="field-error" translatable="cp.psf"></span>
                 </div>
                 <div class="form-group">

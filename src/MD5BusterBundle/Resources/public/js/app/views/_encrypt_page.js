@@ -46,7 +46,7 @@ md5buster.EncryptPage = Marionette.LayoutView.extend({
     },
     onDestroy: function ()
     {
-        grecaptcha.reset();
+        grecaptcha.reset( this.model.get( 'recaptchaWidgetId' ) );
     },
     showTextValidity: function ()
     {
@@ -86,7 +86,6 @@ md5buster.EncryptPage = Marionette.LayoutView.extend({
                 },
                 dataType: 'json'
             }).done( function ( response ) {
-                grecaptcha.reset();
                 this.resultsArea.show( new md5buster.DecryptionResultsCollectionView({
                     /** @namespace response.payload */
                     collection: new md5buster.DecryptionResultsCollection( response.payload )
@@ -96,7 +95,6 @@ md5buster.EncryptPage = Marionette.LayoutView.extend({
                 this.ui.resultFieldset.css({ display: 'block' });
 
             }).fail( function ( jqXHR ) {
-                grecaptcha.reset();
                 this.ui.ajaxErrorMessage.html( md5buster.app.utilityFunctions.composeAjaxErrorMessages( jqXHR ) );
                 this.ui.loadingFieldset.css({ display: 'none' });
                 this.ui.errorFieldset.css({ display: 'block' });
@@ -106,7 +104,7 @@ md5buster.EncryptPage = Marionette.LayoutView.extend({
     resetEncryptForm: function ( e )
     {
         e.preventDefault();
-        grecaptcha.reset();
+        grecaptcha.reset( this.model.get( 'recaptchaWidgetId' ) );
         this.ui.text.val('').closest('.form-group').removeClass('error');
         this.ui.textToEncrypt.text( '' );
         this.ui.ajaxErrorMessage.html('');

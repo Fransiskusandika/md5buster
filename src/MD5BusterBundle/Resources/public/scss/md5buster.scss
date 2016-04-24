@@ -152,11 +152,28 @@ html {
         .decrypt-page {
 
         }
-        .contact-page, .encrypt-page {
+        .encrypt-page {
           padding-bottom: 150px;
           fieldset {
             input[type="text"], input[type="email"] {
               text-align: left;
+            }
+          }
+        }
+        .contact-page {
+          padding-bottom: 150px;
+          fieldset {
+            input[type="text"], input[type="email"], textarea {
+              @include transition( border-color, ease-in-out, .15s );
+              @include border-radius( 0px );
+              text-align: left;
+              padding: 10px;
+              border: none;
+              border-bottom: 1px solid #ccc;
+              color: #008080;
+              font-size: 20px;
+              -webkit-box-shadow: none;
+              box-shadow: none;
             }
           }
         }

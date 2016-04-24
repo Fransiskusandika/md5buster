@@ -45,7 +45,7 @@ md5buster.ContactPage = Marionette.ItemView.extend({
     },
     onDestroy: function ()
     {
-        grecaptcha.reset();
+        grecaptcha.reset( this.model.get( 'recaptchaWidgetId' ) );
     },
     enableGoogleRecaptcha: function(){
         this.model.set({ recaptchaWidgetId: md5buster.app.utilityFunctions.renderRecaptchaWidget( this.ui.recaptcha ) });
@@ -115,12 +115,10 @@ md5buster.ContactPage = Marionette.ItemView.extend({
                 },
                 dataType: 'json'
             }).done( function () {
-                grecaptcha.reset();
                 this.ui.loadingFieldset.css({ display: 'none' });
                 this.ui.successFieldset.css({ display: 'block' });
 
             }).fail( function ( jqXHR ) {
-                grecaptcha.reset();
                 this.ui.ajaxErrorMessage.html( md5buster.app.utilityFunctions.composeAjaxErrorMessages( jqXHR ) );
                 this.ui.loadingFieldset.css({ display: 'none' });
                 this.ui.errorFieldset.css({ display: 'block' });
@@ -130,7 +128,7 @@ md5buster.ContactPage = Marionette.ItemView.extend({
     resetContactForm: function ( e )
     {
         e.preventDefault();
-        grecaptcha.reset();
+        grecaptcha.reset( this.model.get( 'recaptchaWidgetId' ) );
         this.ui.name.val('').closest('.form-group').removeClass('error');
         this.ui.email.val('').closest('.form-group').removeClass('error');
         this.ui.feedback.val('').closest('.form-group').removeClass('error');
