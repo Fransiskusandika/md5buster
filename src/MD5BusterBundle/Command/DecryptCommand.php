@@ -12,6 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class DecryptCommand extends ContainerAwareCommand
 {
     private $chars;
+    private $lastDecryptionId;
 
     /**
      *
@@ -25,6 +26,7 @@ class DecryptCommand extends ContainerAwareCommand
             '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ', ',', '.', '!', '?', '-', '+', ':', ';', '\'', '"', '@', '#', '$', '%', '^',
             '&', '*', '(', ')', '[', ']', '{', '}', '=', '_', '`', '~', '/', '\\', '<', '>', '|'
         ];
+        $this->lastDecryptionId = 0;
     }
 
     /**
@@ -40,12 +42,6 @@ class DecryptCommand extends ContainerAwareCommand
                 null,
                 InputOption::VALUE_REQUIRED,
                 'How long should the script run for?'
-            )
-            ->addOption(
-                'lastDecryption',
-                null,
-                InputOption::VALUE_REQUIRED,
-                'what is the last decrypted vaue'
             )
         ;
     }
@@ -96,17 +92,15 @@ class DecryptCommand extends ContainerAwareCommand
         $chars = $this->chars;
         $numberOfChars = count( $chars );
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $lastDecryption = $input->getOption('lastDecryption');
-        if( $lastDecryption == null ){
-            $lastDecryption = $em->getRepository('MD5BusterBundle:MD5Decryption')->findOneBy([ 'userAdded' => false ],['id' => 'DESC']);
-            if( $lastDecryption == null ){
-                $lastDecryption = new MD5Decryption();
-                $lastDecryption->setDecryption('a')->setHash(md5('a'));
-                $em->persist($lastDecryption);
-                $em->flush();
-            }
-            $lastDecryption = $lastDecryption->getDecryption();
+        $lastDecryptionEntity = $em->getRepository('MD5BusterBundle:MD5Decryption')->findOneBy([ 'userAdded' => false ],['id' => 'DESC']);
+        if( $lastDecryptionEntity == null ){
+            $lastDecryptionEntity = new MD5Decryption();
+            $lastDecryptionEntity->setDecryption('a')->setHash(md5('a'));
+            $em->persist($lastDecryptionEntity);
+            $em->flush();
         }
+        $this->lastDecryptionId = $lastDecryptionEntity->getId();
+        $lastDecryption = $lastDecryptionEntity->getDecryption();
         //$output->writeln('Starting script for ' . $time . ' seconds ' );
         $count = 1;
         $flushSize = 500;
@@ -128,7 +122,7 @@ class DecryptCommand extends ContainerAwareCommand
                 if( $timeLimit < new \DateTime() ){
                     //$output->writeln('Time limit reached! Added ' . $count . ' new entries! Exiting ...');
                     $em->flush();
-                    $em->clear();
+                    $this->updateHashCount( $count );
                     //$this->sendHashReport( $startedAt, new \DateTime(), $count, $this->getMemoryUsage() );
                     //sleep( 3 );
                     die;
@@ -151,6 +145,7 @@ class DecryptCommand extends ContainerAwareCommand
             //$output->writeln('Finished! Flushing remaining items');
             $em->flush();
             $em->clear();
+            $this->updateHashCount( $count );
         } else if( strlen( $lastDecryption ) == 2 ){
             //$output->write('Resuming 2 character long decryption ...');
             $lastDecryptionComponents = str_split($lastDecryption);
@@ -171,7 +166,7 @@ class DecryptCommand extends ContainerAwareCommand
                     if( $timeLimit < new \DateTime() ){
                         //$output->writeln('Time limit reached! Added ' . $count . ' new entries! Exiting ...');
                         $em->flush();
-                        $em->clear();
+                        $this->updateHashCount( $count );
                         //$this->sendHashReport( $startedAt, new \DateTime(), $count, $this->getMemoryUsage() );
                         //sleep( 3 );
                         die;
@@ -196,6 +191,7 @@ class DecryptCommand extends ContainerAwareCommand
             //$output->writeln('Finished! Flushing remaining items');
             $em->flush();
             $em->clear();
+            $this->updateHashCount( $count );
         } else if( strlen( $lastDecryption ) == 3 ){
             //$output->write('Resuming 3 character long decryption ...');
             $lastDecryptionComponents = str_split($lastDecryption);
@@ -218,7 +214,7 @@ class DecryptCommand extends ContainerAwareCommand
                         if( $timeLimit < new \DateTime() ){
                             //$output->writeln('Time limit reached! Added ' . $count . ' new entries! Exiting ...');
                             $em->flush();
-                            $em->clear();
+                            $this->updateHashCount( $count );
                             //$this->sendHashReport( $startedAt, new \DateTime(), $count, $this->getMemoryUsage() );
                             //sleep( 3 );
                             die;
@@ -245,6 +241,7 @@ class DecryptCommand extends ContainerAwareCommand
             //$output->writeln('Finished! Flushing remaining items');
             $em->flush();
             $em->clear();
+            $this->updateHashCount( $count );
         } else if( strlen( $lastDecryption ) == 4 ){
             //$output->write('Resuming 4 character long decryption ...');
             $lastDecryptionComponents = str_split($lastDecryption);
@@ -269,7 +266,7 @@ class DecryptCommand extends ContainerAwareCommand
                             if( $timeLimit < new \DateTime() ){
                                 //$output->writeln('Time limit reached! Added ' . $count . ' new entries! Exiting ...');
                                 $em->flush();
-                                $em->clear();
+                                $this->updateHashCount( $count );
                                 //$this->sendHashReport( $startedAt, new \DateTime(), $count, $this->getMemoryUsage() );
                                 //sleep( 2 );
                                 die;
@@ -298,6 +295,7 @@ class DecryptCommand extends ContainerAwareCommand
             //$output->writeln('Finished! Flushing remaining items');
             $em->flush();
             $em->clear();
+            $this->updateHashCount( $count );
         } else if( strlen( $lastDecryption ) == 5 ){
             //$output->write('Resuming 5 character long decryption ...');
             $lastDecryptionComponents = str_split($lastDecryption);
@@ -324,6 +322,7 @@ class DecryptCommand extends ContainerAwareCommand
                                 if( $timeLimit < new \DateTime() ){
                                     //$output->writeln('Time limit reached! Added ' . $count . ' new entries! Exiting ...');
                                     $em->flush();
+                                    $this->updateHashCount( $count );
                                     //$this->sendHashReport( $startedAt, new \DateTime(), $count, $this->getMemoryUsage() );
                                     //sleep( 3 );
                                     die;
@@ -354,6 +353,7 @@ class DecryptCommand extends ContainerAwareCommand
             //$output->writeln('Finished! Flushing remaining items');
             $em->flush();
             $em->clear();
+            $this->updateHashCount( $count );
         } else if( strlen( $lastDecryption ) == 6 ){
             //$output->write('Resuming 6 character long decryption ...');
             $lastDecryptionComponents = str_split($lastDecryption);
@@ -382,6 +382,7 @@ class DecryptCommand extends ContainerAwareCommand
                                     if( $timeLimit < new \DateTime() ){
                                         //$output->writeln('Time limit reached! Added ' . $count . ' new entries! Exiting ...');
                                         $em->flush();
+                                        $this->updateHashCount( $count );
                                         //$this->sendHashReport( $startedAt, new \DateTime(), $count, $this->getMemoryUsage() );
                                         //sleep( 3 );
                                         die;
@@ -414,10 +415,19 @@ class DecryptCommand extends ContainerAwareCommand
             //$output->writeln('Finished! Flushing remaining items');
             $em->flush();
             $em->clear();
+            $this->updateHashCount( $count );
         } else {
             //$output->writeln('Not configured to run in this mode');
             $this->sendNotConfiguredHashReport( $startedAt, strlen( $lastDecryption ) );
         }
+    }
+
+    /**
+     * @param $count
+     */
+    private function updateHashCount( $count )
+    {
+        $this->getContainer()->get('md5buster.api.md5')->setHashCount( intval( $this->lastDecryptionId + $count - 1 ) );
     }
 
     /**

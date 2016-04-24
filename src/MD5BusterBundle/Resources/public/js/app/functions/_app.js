@@ -16,9 +16,12 @@ md5buster.AppFunctions = Marionette.extend({
             {
                 md5buster.templates = response.templates;
                 md5buster.translations = response.translations;
+                md5buster.app.user = new md5buster.User();
                 this.renderAppHeader();
                 this.renderAppFooter();
-                this.fetchUserInfo();
+                this.startRouter();
+                this.showCookieFootNote();
+                this.showHashCount();
             }
         });
     },
@@ -26,11 +29,13 @@ md5buster.AppFunctions = Marionette.extend({
     {
         $( 'body' ).append(
             '<div class="footnote-container" id="footnote"></div>' +
-            '<div class="modal-container" id="modal"></div>'
+            '<div class="modal-container" id="modal"></div>' +
+            '<div class="hash-count-container" id="hash-count"></div>'
         );
         md5buster.app.addRegions({
-            footnote      : '#footnote',
-            modal         : '#modal'
+            footnote : '#footnote',
+            modal    : '#modal',
+            hashCount: '#hash-count'
         });
     },
     renderAppHeader: function ()
@@ -43,11 +48,22 @@ md5buster.AppFunctions = Marionette.extend({
         /** @namespace md5buster.app.footer */
         md5buster.app.footer.show( new md5buster.FooterView() );
     },
-    fetchUserInfo: function()
+    showHashCount: function()
     {
-        this.startRouter();
-        this.showCookieFootNote();
-        md5buster.app.user = new md5buster.User();
+        $.ajax({
+            context: this,
+            type: 'GET',
+            url: md5buster.apiRoutes.HASH_COUNT_URL,
+            dataType: 'json',
+            success: function( response )
+            {
+                md5buster.app.hashCount.show(
+                    new md5buster.HashCountView({
+                        model: new md5buster.HashCountModel({ count: response.payload.count })
+                    })
+                );
+            }
+        });
     },
     startRouter: function()
     {

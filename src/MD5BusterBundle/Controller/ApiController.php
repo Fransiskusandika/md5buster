@@ -78,12 +78,8 @@ class ApiController extends Controller
         } else {
             $responseData = $responseData = $this->createErrorResponseArray( 'Invalid request method' );
         }
-        $response = new JsonResponse(
-            $responseData, $responseData['code']
-        );
-        $response->headers->set( 'Content-Type', 'application/json' );
 
-        return $response;
+        return new JsonResponse( $responseData, $responseData['code'] );
     }
 
     /**
@@ -130,12 +126,8 @@ class ApiController extends Controller
         } else {
             $responseData = $responseData = $this->createErrorResponseArray( 'Invalid request method' );
         }
-        $response = new JsonResponse(
-            $responseData, $responseData['code']
-        );
-        $response->headers->set( 'Content-Type', 'application/json' );
 
-        return $response;
+        return new JsonResponse( $responseData, $responseData['code'] );
     }
 
     /**
@@ -173,11 +165,17 @@ class ApiController extends Controller
         } else {
             $responseData = $responseData = $this->createErrorResponseArray( 'Invalid request method' );
         }
-        $response = new JsonResponse(
-            $responseData, $responseData['code']
-        );
-        $response->headers->set( 'Content-Type', 'application/json' );
 
-        return $response;
+        return new JsonResponse( $responseData, $responseData['code'] );
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function hashCountAction()
+    {
+        return new JsonResponse(
+            $this->createSuccessResponseArray( [ 'count' => $this->get('md5buster.api.md5')->getHashCount() ] ), 200
+        );
     }
 }

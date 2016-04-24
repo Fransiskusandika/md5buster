@@ -10,3 +10,6 @@ md5buster_api_encrypt:
 md5buster_api_feedback:
     path:     /feedback
     defaults: { _controller: MD5BusterBundle:Api:feedback, _format: 'json' }
+md5buster_api_hash_count:
+    path:     /hash-count
+    defaults: { _controller: MD5BusterBundle:Api:hashCount, _format: 'json' }

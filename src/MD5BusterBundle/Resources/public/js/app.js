@@ -13,7 +13,8 @@ md5buster.apiRoutes = {
     COMPONENTS_URL  : '_api/components',
     DECRYPT_URL     : '_api/decrypt',
     ENCRYPT_URL     : '_api/encrypt',
-    FEEDBACK_URL    : '_api/feedback'
+    FEEDBACK_URL    : '_api/feedback',
+    HASH_COUNT_URL  : '_api/hash-count'
 };
 
 /** define app constants */

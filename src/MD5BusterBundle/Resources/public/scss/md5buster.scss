@@ -241,5 +241,28 @@ html {
     &>.modal-container {
 
     }
+    &>.hash-count-container {
+      position: fixed;
+      width: 500px;
+      left: -220px;
+      top: 290px;
+      transform: rotate(90deg);
+      font-size: 50px;
+      color: #E4E4E4;
+      font-weight: bold;
+      z-index: -1;
+      &>.hash-count {
+        position: relative;
+        display: inline-block;
+        &:after {
+          content: 'decryptions so far';
+          position: absolute;
+          font-size: 16px;
+          font-weight: normal;
+          bottom: 7px;
+          right: -120px;
+        }
+      }
+    }
   }
 }

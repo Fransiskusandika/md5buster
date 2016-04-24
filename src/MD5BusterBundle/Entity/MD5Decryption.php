@@ -15,7 +15,7 @@ class MD5Decryption
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer") // todo: convert to bigint
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */

@@ -3,6 +3,7 @@ namespace MD5BusterBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Lsw\ApiCallerBundle\Call\HttpPostJson;
+use MD5BusterBundle\Entity\HashCount;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
@@ -124,5 +125,32 @@ class MD5Service
             ->setParameter( 'hash', $hash )
             ->getQuery()->getResult()
         ;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHashCount()
+    {
+        if( ( $hashCount = $this->em->getRepository('MD5BusterBundle:HashCount')->findOneBy([]) ) == null ){
+            $hashCount = new HashCount();
+            $this->em->persist($hashCount);
+            $this->em->flush();
+        }
+
+        return $hashCount->getCount();
+    }
+
+    /**
+     * @param int $count
+     */
+    public function setHashCount( $count )
+    {
+        if( ( $hashCount = $this->em->getRepository('MD5BusterBundle:HashCount')->findOneBy([]) ) == null ){
+            $hashCount = new HashCount();
+        }
+        $hashCount->setCount($count);
+        $this->em->persist($hashCount);
+        $this->em->flush();
     }
 } 
