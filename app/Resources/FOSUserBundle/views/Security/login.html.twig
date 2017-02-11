@@ -1,0 +1,44 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>MD5 Buster Administration</title>
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:600'>
+    <link rel="stylesheet" href="{{ asset('bundles/md5buster/css/login.css') }}">
+</head>
+
+<body>
+<div class="login-wrap">
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    <div class="login-html">
+        <label for="tab-1" class="tab">Sign In</label>
+        <div class="login-form">
+            <div class="sign-in-htm">
+                <form action="{{ path("fos_user_security_check") }}" method="post">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <div class="group">
+                        <label for="user" class="label">{{ 'security.login.username'|trans }}</label>
+                        <input id="user" type="text" class="input" name="_username" value="{{ last_username }}" required="required" >
+                    </div>
+                    <div class="group">
+                        <label for="pass" class="label">{{ 'security.login.password'|trans }}</label>
+                        <input id="pass" type="password" class="input" data-type="password" name="_password" required="required">
+                    </div>
+                    <div class="group">
+                        <input id="check" type="checkbox" class="check" checked name="_remember_me" value="on">
+                        <label for="check"><span class="icon"></span>{{ 'security.login.remember_me'|trans }}</label>
+                    </div>
+                    <div class="group">
+                        <input type="submit" class="button" value="Sign In">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

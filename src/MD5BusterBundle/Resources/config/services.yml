@@ -5,3 +5,21 @@ services:
     md5buster.api.md5:
             class: MD5BusterBundle\Services\MD5Service
             arguments: [ "@service_container", "@doctrine.orm.entity_manager" ]
+
+    md5_buster.admin.md5_decryption:
+        class: MD5BusterBundle\Admin\MD5DecryptionAdmin
+        arguments: [~, MD5BusterBundle\Entity\MD5Decryption, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: MD5Buster, label: MD5Decryption }
+
+    md5_buster.admin.hash_count:
+        class: MD5BusterBundle\Admin\HashCountAdmin
+        arguments: [~, MD5BusterBundle\Entity\HashCount, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: MD5Buster, label: HashCount }
+
+    md5_buster.admin.user:
+        class: MD5BusterBundle\Admin\UserAdmin
+        arguments: [~, MD5BusterBundle\Entity\User, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Users, label: User }

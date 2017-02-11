@@ -1,14 +1,36 @@
 security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN,ROLE_SONATA_ADMIN]
+
     providers:
-        in_memory:
-            memory: ~
+        fos_userbundle:
+            id: fos_user.user_provider.username
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt))/
             security: false
+
+        adminarea:
+            pattern: ^/adminarea
+            form_login:
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+            logout:
+                path: fos_user_security_logout
+            anonymous: ~
+
         md5buster_site_area:
             pattern: ^/
             anonymous:  ~
+
     access_control:
+        - { path: ^/adminarea/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/adminarea/, role: ROLE_ADMIN, requires_channel: https }
         - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
